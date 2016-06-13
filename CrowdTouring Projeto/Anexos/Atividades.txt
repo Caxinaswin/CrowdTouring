@@ -1,0 +1,9 @@
+1 - Efetuar Login
+2 - Efetuar Registo
+3 - Efetuar submissão da proposta na plataforma
+4 - Efetuar pagamento da solução vencedora
+5 - Registar/Eliminar/Editar Solucao
+6 - Registar/Eliminar/Editar Proposta
+7 - Registar/Eliminar/Editar Comentário
+8 - Registar/Eliminar/Editar Avaliação
+9 - Criar Grupos de avaliadores

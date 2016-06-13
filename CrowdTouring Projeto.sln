@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrowdTouring Projeto", "CrowdTouring Projeto\CrowdTouring Projeto.csproj", "{EA76B766-EC64-463E-B69B-14F7C8ED2268}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrowdTouring Projeto.Tests", "CrowdTouring Projeto.Tests\CrowdTouring Projeto.Tests.csproj", "{86A9D167-7056-4243-A3D1-E3F46FD5B258}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EA76B766-EC64-463E-B69B-14F7C8ED2268}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA76B766-EC64-463E-B69B-14F7C8ED2268}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA76B766-EC64-463E-B69B-14F7C8ED2268}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA76B766-EC64-463E-B69B-14F7C8ED2268}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86A9D167-7056-4243-A3D1-E3F46FD5B258}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86A9D167-7056-4243-A3D1-E3F46FD5B258}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86A9D167-7056-4243-A3D1-E3F46FD5B258}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86A9D167-7056-4243-A3D1-E3F46FD5B258}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

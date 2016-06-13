@@ -1,0 +1,39 @@
+﻿@model CrowdTouring_Projeto.ViewModel.SolucaoDesafio
+@{
+    ViewBag.Title = "Details";
+}
+
+    <div class="modal-dialog" style="background-color:#FFFF99">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                <span aria-hidden="true">×</span><span class="sr-only">Close</span>
+                </button> <h4 class="modal-title">@Model.NomeSolucao</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-2">
+                        <label>Descricao</label>
+                    </div>
+                </div>
+                <div class="row">
+                   <p style="margin-left:15px">@Model.DescricaoSolucao</p>
+                </div>
+                <div class="row" style="margin-top:40px">
+                    <div class="col-md-2">
+                        <img src="~/StaticImages/ZIP.png" style="width:100px;height:100px" />
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    @Html.ActionLink("Download", "Download", "Desafios", new { id = Model.FileId })
+                    <span style="display:inline">@Model.FileName</span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                
+            </div>
+        </div>
+    </div>
+
+
+

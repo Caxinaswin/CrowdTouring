@@ -1,0 +1,63 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="row">
+    <div class="col-md-offset-1 col-md-10 col-md-offset-1">
+        <div class="jumbotron HomeImage">
+            <p>As melhores ideias, os melhores negócios e os melhores prémios entra na plataforma e contribui para a melhoria do turismo em Portugal</p>
+            <span class="glyphicon glyphicon-ok" style="color:#00FF00"></span> <label class="colorJumbo">Fácil de Utilizar</label><br />
+            <span class="glyphicon glyphicon-ok" style="color:#00FF00"></span> <label class="colorJumbo">Ganha dinheiro com a tua criatividade</label><br />
+            <span class="glyphicon glyphicon-ok" style="color:#00FF00"></span> <label class="colorJumbo">As melhores escolhas ao preço mais acessivel</label><br />
+        </div>
+    </div>
+</div>
+<div class="row">
+    <button class="btn btn-block btn-primary butaoGrande" onclick="location.href='@Url.Action("Index", "Desafios")'">Entre já na área dos desafios</button>
+</div>
+<div class="row"  style="margin-top:40px">
+    <p id="texto"><span>És tu quem decide como queres contribuir para o desenvolvimento do turismo</span></p>
+</div>
+<div class="row" style="padding-top:10px">
+    <div class="col-md-4">
+        <div class="jumbotron jumboBorder">
+            <p>Cliente</p>
+            <p>Podes Criar desafios de turismo e obter soluções inovadoras e mais baratas!</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="jumbotron jumboBorder">
+            <p>Resolvedor</p>
+            <p>Resolve desafios, ganha prémios e mostra a tua criatividade com soluções inovadoras!</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="jumbotron jumboBorder">
+            <p>Avaliador</p>
+            <p>Intervêm na escolha das soluções, avaliando as melhores soluções de turismo.</p>
+        </div>
+    </div>
+</div>
+    <aside id="default-popup" class="avgrund-popup">
+        <h2>That's all, folks</h2>
+     <p>
+            You can hit ESC or click outside to close the modal. Give it a go to see the reverse transition.
+        </p>
+        <button onclick="avgrund.deactivate();">Close</button>
+    </aside>
+@section Scripts { 
+<script>
+    $(document).ready(function () {
+        if (ViewBag.primeiroLogin == 1) {
+            openDialog();
+        }
+        function openDialog() {
+            Avgrund.show("#default-popup");
+        }
+        function closeDialog() {
+            Avgrund.hide();
+        }
+    });
+    
+</script>
+}

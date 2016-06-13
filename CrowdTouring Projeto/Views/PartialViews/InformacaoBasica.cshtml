@@ -1,0 +1,82 @@
+﻿@model CrowdTouring_Projeto.Models.EditarUtilizadorViewModel
+
+<script src="~/Scripts/bootstrap-filestyle.min.js"></script>
+@using (Html.BeginForm("EditarUtilizador", "Account", null, FormMethod.Post,
+                new { enctype = "multipart/form-data" }))
+{
+    <fieldset class="scheduler-border">
+        <legend class="scheduler-border">Informacão Básica</legend>
+        <fieldset class="col-md-3">
+            @if (Model.ImagePath != null)
+        {
+                <img src="~/Images/@Html.DisplayFor(modelItem => modelItem.ImagePath)" width="150" height="150" id="fotografia" />
+                <div style="margin-top:10px">
+                    <input id="ImagePath" type="file" name="file" class="filestyle" data-input="false" data-buttonText="Altera a tua foto" />
+                </div>
+                <div style="margin-top:30px">
+                    <input id="ImagePath" type="file" name="file" class="filestyle" data-input="false" data-buttonText="Apagar Foto" />
+                </div>
+            }
+            else
+            {
+                <img src="~/StaticImages/default-user-image.png" width="150" height="150" id="ImagePath" />
+                <div style="margin-top:10px">
+                    <input type="file" name="file" class="filestyle" data-input="false" data-buttonText="Carrega  uma foto" />
+                </div>
+            }
+        </fieldset>
+        <div class="col-md-7">
+            <div class="form form-horizontal">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Utilizador, "Utilizador:", new { @class = "col-md-3 control-label", style = "text-align:right" })
+                    <div class="col-md-9">
+                        <p class="form-control-static">@Model.Utilizador</p>
+                        @Html.ValidationMessageFor(model => model.Utilizador, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.TipoUtilizador, new { @class = "col-md-3 control-label" })
+                    <div class="col-md-9">
+                        <p class="form-control-static">@Model.TipoUtilizador</p>
+                        @Html.ValidationMessageFor(model => model.TipoUtilizador, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.DataNascimento, new { @class = "col-md-3 control-label" })
+                    <div class="col-md-9">
+                        <p class="form-control-static">@Model.DataNascimento</p>
+                        @Html.ValidationMessageFor(model => model.DataNascimento, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Email, "Email:", new { @class = "col-md-3 control-label" })
+                    <div class="col-md-9">
+                        <p class="form-control-static">@Model.Email</p>
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Telemóvel, "Telemóvel:", new { @class = "col-md-3 control-label" })
+                    <div class="col-md-5">
+                        @Html.TextBoxFor(m => m.Telemóvel, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Telemóvel, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-3 col-md-9">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/CrowdTouring.js"></script>
+
+
+}

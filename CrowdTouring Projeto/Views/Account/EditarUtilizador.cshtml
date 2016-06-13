@@ -1,0 +1,52 @@
+﻿@model CrowdTouring_Projeto.Models.EditarUtilizadorViewModel
+
+@{
+    ViewBag.Title = "Edit";
+}
+<div class="row" style="margin-top:10px">
+    <div class="col-md-offset-2 col-md-10">
+        <h2 style="font-weight:700">Editar Perfil Pessoal</h2>
+    </div>
+</div>
+<div class="row" style="margin-top:15px">
+    <div class="col-md-2" style="border:1px solid black" >
+        <div class="row caixaUser" style="margin-top:25px;padding:5px;">
+            <a href="#" class="linkUser" id="linkInfo"><span class="glyphicon glyphicon-user black"></span> Informação básica</a>
+        </div>
+        <div class="row caixaUser" style="margin-top:25px;padding:5px;">
+            <a href="#" data-url='@Url.Action("details","user")' class="linkUser" id="linkOutra"><span class="glyphicon glyphicon-folder-open black"></span> Outras Informações</a>
+        </div>
+        <div class="row caixaUser" style="margin-top:25px;padding:5px;">
+            <a href="#" class="linkUser" id="linkSegu"><span class="glyphicon glyphicon-lock black"></span> Segurança</a>
+        </div>
+        <div class="row caixaUser"  style="margin-top:25px;padding:5px;">
+            <a href="#" class="linkUser" id="linkTag"><span class="glyphicon glyphicon-tags black"></span> Tags</a>
+        </div>
+        <br /><br />
+        </div>
+    <div class="col-md-10 vistaParcial">
+       @Html.Action("_InformacaoBasica", "Account")
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+    $('#linkInfo').click(function () {
+        $('.vistaParcial').load('@Url.Action("_InformacaoBasica", "Account")');
+    });
+        $('#linkOutra').click(function () {
+            $('.vistaParcial').load('@Url.Action("_OutrasInformacoes", "Account")');
+        });
+        $('#linkSegu').click(function () {
+            $('.vistaParcial').load('@Url.Action("_Seguranca", "Account")');
+        });
+        $('#linkTag').click(function () {
+            $('.vistaParcial').load('@Url.Action("_Tags", "Account")');
+        });
+    </script>
+    <script src="~/Scripts/bootstrap-filestyle.min.js"></script>
+    <script src="~/Scripts/CrowdTouring.js"></script>
+}
+
+
