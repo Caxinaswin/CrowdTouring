@@ -435,22 +435,30 @@ namespace CrowdTouring_Projeto.Controllers
 
         public ActionResult VisualizarPerfilUtilizador(string id)
         {
-            var utilizador = db.Users.Where(u => u.UserName == id).First();
-            var role = (from s in db.Roles where s.Id == utilizador.TipoUtilizador select s.Name).First();
-            EditarUtilizadorViewModel PerfilUtilizador = new EditarUtilizadorViewModel();  // reaproveitar o modelview
-            PerfilUtilizador.Utilizador = utilizador.UserName;
-            PerfilUtilizador.Email = utilizador.Email;
-            PerfilUtilizador.Telemóvel = utilizador.Telemóvel;
-            DateTime reference = DateTime.Now;
-            PerfilUtilizador.Idade = CalculaIdade(reference,utilizador.DataNascimento);
-            PerfilUtilizador.TipoUtilizador = role;
-            preencherTagUtilizador(utilizador);
-            PerfilUtilizador.Sobre = utilizador.Sobre;
-            PerfilUtilizador.Empresa = utilizador.empresa;
-            PerfilUtilizador.Website = utilizador.website;
-            PerfilUtilizador.Pontos = utilizador.pontos;
-            PerfilUtilizador.Iban = utilizador.Iban;
-            return View(PerfilUtilizador);
+            
+            var utilizador = db.Users.Where(u => u.UserName == id).FirstOrDefault();
+            if (utilizador != null)
+            {
+                var role = (from s in db.Roles where s.Id == utilizador.TipoUtilizador select s.Name).First();
+                EditarUtilizadorViewModel PerfilUtilizador = new EditarUtilizadorViewModel();  // reaproveitar o modelview
+                PerfilUtilizador.Utilizador = utilizador.UserName;
+                PerfilUtilizador.Email = utilizador.Email;
+                PerfilUtilizador.Telemóvel = utilizador.Telemóvel;
+                DateTime reference = DateTime.Now;
+                PerfilUtilizador.Idade = CalculaIdade(reference, utilizador.DataNascimento);
+                PerfilUtilizador.TipoUtilizador = role;
+                preencherTagUtilizador(utilizador);
+                PerfilUtilizador.Sobre = utilizador.Sobre;
+                PerfilUtilizador.Empresa = utilizador.empresa;
+                PerfilUtilizador.Website = utilizador.website;
+                PerfilUtilizador.Pontos = utilizador.pontos;
+                PerfilUtilizador.Iban = utilizador.Iban;
+                return View(PerfilUtilizador);
+            }
+            else
+            {
+                return new HttpNotFoundResult("O Perfil que indicou não existe");
+            }
         }
 
         private int CalculaIdade(DateTime reference,DateTime dataNascimento)

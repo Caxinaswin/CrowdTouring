@@ -48,4 +48,15 @@ $(document).ready(function () {
     }).mouseout(function () {
         $(this).css("background-color", "transparent");
     });
+
+    $("#submeterUtilizador").submit(function (event) {
+        console.log("a");
+        var utilizadorNome1 = $("#srch-term").val();
+        var utilizadorNome2 = $("#Utilizador").val();
+        if(utilizadorNome1 == utilizadorNome2)
+            $.post("/Account/EditarUtilizador" + utilizadorNome1);
+        else 
+            $.post("/Account/VisualizarPerfilUtilizador" + utilizadorNome1);
+    });
+
 });

@@ -55,6 +55,11 @@ namespace CrowdTouring_Projeto.Models
                                 select d).Take(numeroDesafios);
         }
 
+        private void PesquisarUtilizador(string Utilizador)
+        {
+            var user = db.Users.Where(m => m.UserName == Utilizador);
+
+        }
 
         private void carregaFiltros()
         {
@@ -244,7 +249,7 @@ namespace CrowdTouring_Projeto.Models
         public ActionResult listaDesafiosTag(string listaTags)
         {
             System.Diagnostics.Debug.WriteLine(listaTags);
-            var desafios = db.Desafios.Include(d => d.TipoAvaliacao).Include(d => d.User).Include(d => d.Tags);
+            var desafios = db.Desafios.Include(d => d.TipoAvaliacao).Include(d => d.User).Include(d => d.Tags).Where(c => c.Tags.Any(s => listaTags == s.NomeTag));
             var count = db.Desafios.Count();
             carregaInformacaoUtilizador();
             carregaRecentes(desafios,count);
@@ -285,6 +290,28 @@ namespace CrowdTouring_Projeto.Models
             }
 
             return View("Index", desafios.ToList());
+        }
+
+        [HttpPost]
+        public ActionResult pesquisarDesafio(string desafio)
+        {
+
+
+            var desafios = db.Desafios.Include(d => d.TipoAvaliacao).Include(d => d.User).Include(d => d.Tags);
+            var count = db.Desafios.Count();
+            carregaInformacaoUtilizador();
+            carregaRecentes(desafios, count);
+            carregaFiltros();
+            var verificaExite = desafios.Any(d => d.TipoTrabalho == desafio);
+            if (desafios.Any(d => d.TipoTrabalho == desafio) == true)
+            {
+                return View("Index", desafios.Where(d => d.TipoTrabalho == desafio).ToList());
+            }
+            else
+            {
+                return new HttpNotFoundResult("O desafio que indicou não existe");
+            }
+          
         }
 
         private ICollection<Tag> atualizarTagsDesafio(Desafio desafio,

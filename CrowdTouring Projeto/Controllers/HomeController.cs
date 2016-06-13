@@ -14,8 +14,8 @@ namespace CrowdTouring_Projeto.Controllers
 
         public ActionResult Index()
         {
-            var primeiroLogin = db.Users.Where(d => d.Id == User.Identity.GetUserId()).Select(d => d.UltimaSessao);
-            ViewBag.primeiroLogin = primeiroLogin;
+            //var primeiroLogin = db.Users.Where(d => d.Id == User.Identity.GetUserId()).Select(d => d.UltimaSessao);
+           //ViewBag.primeiroLogin = primeiroLogin;
             return View();
         }
 

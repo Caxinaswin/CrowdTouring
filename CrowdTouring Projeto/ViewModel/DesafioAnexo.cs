@@ -13,10 +13,12 @@ namespace CrowdTouring_Projeto.ViewModel
         [StringLength(50)]
         public string TipoTrabalho { get; set; }
         public string Descricao { get; set; }
-        [Range(0, 500)]
         public int ValorMonetario { get; set; }
         public double lat { get; set; }
         public double lon { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime DesafioSolucao { get; set; }
         public ICollection<TagDesafio> TagDesafio { get; set; }
        
     }
