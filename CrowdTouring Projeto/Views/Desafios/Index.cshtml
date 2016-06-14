@@ -5,57 +5,58 @@
     ViewBag.Title = "Index";
 }
 
-<div class="row">
-    <div class="col-md-offset-3 col-md-2">
-        <h3 style="font-weight:900">Desafios</h3>
-    </div>
-</div>
-<div class="row" style="margin-top:15px;margin-right:20px">
-    <div class="col-md-offset-3 col-md-2">
-        <button class="btn btn-primary" data-target="#DesafioModal" data-toggle="modal" id="CriarDesafio" style="margin-left:40px" >Criar desafio</button>
-    </div>
-    <div class="col-md-3">
-        @using (Html.BeginForm("filtrarDesafios", "Desafios", FormMethod.Post))
-        {
-         @Html.DropDownList("filtro", null, new { @class = "form-control", onchange = "this.form.submit();",@style="margin-left:20px" })
-    }
-    </div>
-    @using (Html.BeginForm("pesquisarDesafio", "Desafios", FormMethod.Post))
-    {
-    <div class="input-group col-md-3" style="width:260px">
-        <div class="input-group-btn">
-            <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+<div id="contentorAjax">
+    <div class="row">
+        <div class="col-md-offset-3 col-md-2">
+            <h3 style="font-weight:900">Desafios</h3>
         </div>
-        <input type="text" class="form-control" placeholder="Nome do desafio" name="desafio" id="srch-term">
     </div>
-    }
-</div>
-<div class="row">
-    <div class="col-md-3">
-        <div class="row"  style="border:2px solid black;border-radius:9px;margin-top:80px">
-            @{
-                var utilizador = new CrowdTouring_Projeto.ViewModel.PerfilUtilizador();
-                utilizador = ViewBag.User;
-                if (utilizador.path != null)
-                {
-                    <a href=@Url.Action("EditarUtilizador", "Account")><img src="~/Images/@utilizador.path" width="90" height="90" class="img-circle" style="display:block;margin-left:auto;margin-right:auto;margin-top:5px" /></a>
-                }
-                else
-                {
-                    <a href=@Url.Action("EditarUtilizador", "Account")><img src="~/StaticImages/default-user-image.png" width="90" height="90" class="img-circle" style="display:block;margin-left:auto;margin-right:auto;margin-top:5px" /></a>
-                }
-                <a href=@Url.Action("EditarUtilizador", "Account")><p style="text-align:center">O meu perfil</p></a>
-                <p style="text-align:center">@utilizador.pontos</p>
-                <p style="text-align:center">Pontos</p>
-                <p style="text-align:center;font-weight:bold">Os meus intresses</p>
+    <div class="row" style="margin-top:15px;margin-right:20px">
+        <div class="col-md-offset-3 col-md-2">
+            <button class="btn btn-primary" data-target="#DesafioModal" data-toggle="modal" id="CriarDesafio" style="margin-left:40px">Criar desafio</button>
+        </div>
+        <div class="col-md-3">
+            @using (Html.BeginForm("filtrarDesafios", "Desafios", FormMethod.Post))
+            {
+                @Html.DropDownList("filtro", null, new { @class = "form-control", onchange = "this.form.submit();", @style = "margin-left:20px" })
+            }
+        </div>
+        @using (Html.BeginForm("pesquisarDesafio", "Desafios", FormMethod.Post))
+        {
+            <div class="input-group col-md-3" style="width:260px">
+                <div class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                </div>
+                <input type="text" class="form-control" placeholder="Nome do desafio" name="desafio" id="srch-term">
+            </div>
+        }
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="row" style="border:2px solid black;border-radius:9px;margin-top:80px">
+                @{
+                    var utilizador = new CrowdTouring_Projeto.ViewModel.PerfilUtilizador();
+                    utilizador = ViewBag.User;
+                    if (utilizador.path != null)
+                    {
+                        <a href=@Url.Action("EditarUtilizador", "Account")><img src="~/Images/@utilizador.path" width="90" height="90" class="img-circle" style="display:block;margin-left:auto;margin-right:auto;margin-top:5px" /></a>
+                    }
+                    else
+                    {
+                        <a href=@Url.Action("EditarUtilizador", "Account")><img src="~/StaticImages/default-user-image.png" width="90" height="90" class="img-circle" style="display:block;margin-left:auto;margin-right:auto;margin-top:5px" /></a>
+                    }
+                    <a href=@Url.Action("EditarUtilizador", "Account")><p style="text-align:center">O meu perfil</p></a>
+                    <p style="text-align:center">@utilizador.pontos</p>
+                    <p style="text-align:center">Pontos</p>
+                    <p style="text-align:center;font-weight:bold">Os meus intresses</p>
                     foreach (var i in utilizador.tags)
                     {
                         <ul class="tagMargin">
                             <li><a href="##" name="listaTags" class="tag" style="font-size:9px;color:@i.cor">@i.NomeTag</a></li>
                         </ul>
                     }
-                <br /><br />
-                <p style="text-align:center;margin-top:20px"><a href="#">Ver Favoritos</a></p>
+                    <br /><br />
+                    <p style="text-align:center;margin-top:20px"><a href="#">Ver Favoritos</a></p>
                     using (Html.BeginForm("VisualizarPerfilUtilizador", "Account", FormMethod.Post))
                     {
                         <div class="input-group">
@@ -66,10 +67,10 @@
                         </div>
                     }
 
-                <br />
-                IEnumerable<CrowdTouring_Projeto.Models.Desafio> recentes = ViewBag.Recentes;
-            }
-        </div>
+                    <br />
+                    IEnumerable<CrowdTouring_Projeto.Models.Desafio> recentes = ViewBag.Recentes;
+                }
+            </div>
             <div class="row" style="margin-top:40px;border:2px solid black;border-radius:8px">
                 <h5 style="text-align:center" class="linebef"><span>Os mais Recentes</span></h5>
                 @foreach (var i in recentes)
@@ -78,82 +79,84 @@
                     <hr id="linhaRecentes" />
                 }
             </div>
-    </div>
-    <div class="col-md-9" style="margin-top:20px" >
-        <fieldset class="scheduler-border">
-            <legend class="scheduler-border"><ul class="nav nav-tabs" style="border-bottom:1px solid gray;margin-top:15px">
-                <li><a href="#" style="font-size:10px;border-left:2px solid #d3d3d3;border-right:2px solid #d3d3d3;border-top:2px solid #d3d3d3">A aceitar soluções</a></li>
-                <li><a href="#" style="font-size:10px;border-left:2px solid #d3d3d3;border-right:2px solid #d3d3d3;border-top:2px solid #d3d3d3">Fechado para votação</a></li>
-                <li><a href="#" style="font-size:10px;border-left:2px solid #d3d3d3;border-right:2px solid #d3d3d3;border-top:2px solid #d3d3d3">Fechado para avaliação</a></li>
-                </ul>
-            </legend>
-            @foreach (var i in Model)
+        </div>
+        <div class="col-md-9" style="margin-top:20px">
+            <fieldset class="scheduler-border">
+                <legend class="scheduler-border">
+                    <ul class="nav nav-tabs" style="border-bottom:1px solid gray;margin-top:15px">
+                        <li><a href="#" style="font-size:10px;border-left:2px solid #d3d3d3;border-right:2px solid #d3d3d3;border-top:2px solid #d3d3d3">A aceitar soluções</a></li>
+                        <li><a href="#" style="font-size:10px;border-left:2px solid #d3d3d3;border-right:2px solid #d3d3d3;border-top:2px solid #d3d3d3">Fechado para votação</a></li>
+                        <li><a href="#" style="font-size:10px;border-left:2px solid #d3d3d3;border-right:2px solid #d3d3d3;border-top:2px solid #d3d3d3">Fechado para avaliação</a></li>
+                    </ul>
+                </legend>
+                @foreach (var i in Model)
             {
-                <div class="col-md-10" style="border:2px solid #669999;margin-left:5px;margin-top:5px;border-radius:8px">
-                    <div class="col-md-2" style="border-right:2px solid #d3d3d3; padding-left:2px">
-                        <div class="row" style="padding-top:5px">
-                            <div class="col-md-6" style="text-align:center">
-                                <p class="fonteDesafio" style="font-weight:900">@i.Visualizacoes</p> <p class="fonteDesafio">Visualizações</p>
+                    <div class="col-md-10" style="border:2px solid #669999;margin-left:5px;margin-top:5px;border-radius:8px">
+                        <div class="col-md-2" style="border-right:2px solid #d3d3d3; padding-left:2px">
+                            <div class="row" style="padding-top:5px">
+                                <div class="col-md-6" style="text-align:center">
+                                    <p class="fonteDesafio" style="font-weight:900">@i.Visualizacoes</p> <p class="fonteDesafio">Visualizações</p>
+                                </div>
+                                <div class="col-md-6" style="text-align:center">
+                                    <p class="fonteDesafio" style="font-weight:900">12</p> <p class="fonteDesafio">Solucões</p>
+                                </div>
                             </div>
-                            <div class="col-md-6" style="text-align:center">
-                                <p class="fonteDesafio" style="font-weight:900">12</p> <p class="fonteDesafio">Solucões</p>
+                            <div class="row">
+                                <div class="col-md-6" style="text-align:center">
+                                    <p class="fonteDesafio" style="font-weight:900">1</p> <p class="fonteDesafio">Ponto</p>
+                                </div>
+                                <div class="col-md-6" style="text-align:center">
+                                    <p class="fonteDesafio" style="font-weight:900">@i.valor</p> <p class="fonteDesafio">Valor</p>
+                                </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6" style="text-align:center">
-                                <p class="fonteDesafio" style="font-weight:900">1</p> <p class="fonteDesafio">Ponto</p>
+                        <div class="col-md-10">
+                            <div class="col-md-offset-1 col-md-9" style="margin-left:15px">
+                                <a href=@Url.Action("Details", "Desafios",new {id = i.DesafioId })>
+                                    <div class="col-md-8">
+                                        <label style="text-decoration:underline;font-weight:900;font-size:11px">@i.TipoTrabalho</label>
+                                    </div>
+                                </a>
                             </div>
-                            <div class="col-md-6" style="text-align:center">
-                                <p class="fonteDesafio" style="font-weight:900">@i.valor</p> <p class="fonteDesafio">Valor</p>
+                            <div class="row col-md-offset-1 col-md-11" style="margin-left:15px">
+                                @foreach (var tags in i.Tags)
+                                {
+
+                                    <ul class="tagMargin">
+                                        <li><a href="#" class="tag" style="font-size:9px;color:@tags.cor">@tags.NomeTag</a></li>
+                                    </ul>
+
+                                }
+                            </div>
+                            <div class="row col-md-offset-1 col-md-11" style="margin-left:15px">
+                                <div class="row seccaoDatas">
+                                    <div class="col-md-5">
+                                        @if (@i.User.Id == User.Identity.GetUserId())
+                                        {
+                                            <p class="fonteDesafio datas"><span>Criado por <a href=@Url.Action("EditarUtilizador", "Account")>@i.User.Nome</a> dia @i.DataCriacao.ToShortDateString() ás @i.DataCriacao.Hour<span>:</span>@i.DataCriacao.Minute </span></p>
+                                        }
+                                        else
+                                        {
+                                            <p class="fonteDesafio datas"><span>Criado por <a href=@Url.Action("VisualizarPerfilUtilizador","Account",new { @id = i.User.UserName})>@i.User.Nome</a> dia @i.DataCriacao.ToShortDateString() ás @i.DataCriacao.Hour<span>:</span>@i.DataCriacao.Minute </span></p>
+                                        }
+                                    </div>
+                                    <div class="col-md-offset-2 col-md-5">
+                                        <p class="fonteDesafio datas">Termina dia @i.DataCriacao.AddDays(5)</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-10">
-                        <div class="col-md-offset-1 col-md-9" style="margin-left:15px">
-                            <a href=@Url.Action("Details", "Desafios",new {id = i.DesafioId })>
-                                <div class="col-md-8">
-                                    <label style="text-decoration:underline;font-weight:900;font-size:11px">@i.TipoTrabalho</label>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="row col-md-offset-1 col-md-11" style="margin-left:15px">
-                            @foreach (var tags in i.Tags)
-                            {
+                    <br /><br />
 
-                                <ul class="tagMargin">
-                                    <li><a href="#" class="tag" style="font-size:9px;color:@tags.cor">@tags.NomeTag</a></li>
-                                </ul>
+                }
+            </fieldset>
+        </div>
 
-                            }
-                        </div>
-                        <div class="row col-md-offset-1 col-md-11" style="margin-left:15px">
-                            <div class="row seccaoDatas">
-                                <div class="col-md-5">
-                                    @if (@i.User.Id == User.Identity.GetUserId())
-                                    {
-                                        <p class="fonteDesafio datas"><span>Criado por <a href=@Url.Action("EditarUtilizador", "Account")>@i.User.Nome</a> dia @i.DataCriacao.ToShortDateString() ás @i.DataCriacao.Hour<span>:</span>@i.DataCriacao.Minute </span></p>
-                                    }
-                                    else
-                                    {
-                                        <p class="fonteDesafio datas"><span>Criado por <a href=@Url.Action("VisualizarPerfilUtilizador","Account",new { @id = i.User.UserName})>@i.User.Nome</a> dia @i.DataCriacao.ToShortDateString() ás @i.DataCriacao.Hour<span>:</span>@i.DataCriacao.Minute </span></p>
-                                    }
-                                </div>
-                                <div class="col-md-offset-2 col-md-5">
-                                    <p class="fonteDesafio datas">Termina dia @i.DataCriacao.AddDays(5)</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <br /><br />
-
-            }
-        </fieldset>
     </div>
+    <div class="modal" id="modal" style="margin-top:100px">
 
-</div>
-<div class="modal" id="modal">
-
+    </div>
 </div>
 
 @Scripts.Render("~/bundles/jquery")
