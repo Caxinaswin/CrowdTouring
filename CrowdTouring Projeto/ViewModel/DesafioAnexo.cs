@@ -17,6 +17,7 @@ namespace CrowdTouring_Projeto.ViewModel
         public double lat { get; set; }
         public double lon { get; set; }
         [DataType(DataType.Date)]
+        [CustomDateRange(ErrorMessage = "tem que estar entre")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime DesafioSolucao { get; set; }
         public ICollection<TagDesafio> TagDesafio { get; set; }

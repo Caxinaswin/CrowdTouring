@@ -68,6 +68,7 @@
                         @:</tr>
                     }
                 </table>
+            @Html.ValidationMessage("TagErro", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -77,7 +78,9 @@
        @Html.HiddenFor(m => m.lon)
 
 
-        <input type="file" name="file" class="marginTop" />       
+        <input type="file" name="file" class="marginTop" />     
+        @Html.ValidationMessage("ErroFicheiro", new { @class = "text-danger" })
+        @Html.ValidationMessage("Zip", new { @class = "text-danger" })  
         </div>
         <div class="modal-footer">
             <button type="submit" class="btn btn-lg btn-primary marginTop" id="criarDesafio">Criar Desafio</button>

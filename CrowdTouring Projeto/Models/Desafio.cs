@@ -28,7 +28,7 @@ namespace CrowdTouring_Projeto.Models
         public double lon { get; set; }
         public int IdSolucaoVencedora { get; set; }
         [Required]
-        [CustomDateRange]
+        [CustomDateRange(ErrorMessage = "tem que estar entre")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{MMMM/d/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime DataFinalSolucoes { get; set; }

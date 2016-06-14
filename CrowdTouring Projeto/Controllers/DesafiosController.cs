@@ -1,4 +1,5 @@
 ﻿using CrowdTouring_Projeto.ViewModel;
+using Ionic.Zip;
 using Microsoft.AspNet.Identity;
 using PagedList;
 using System;
@@ -205,6 +206,25 @@ namespace CrowdTouring_Projeto.Models
         {
             TipoAvaliacao TipoAvaliacao = db.TiposAvaliacao.Where(i => i.TipoAvaliacaoId == 1).FirstOrDefault();
             System.Diagnostics.Debug.WriteLine(model.lat);
+            if (selectedTag == null)
+            {
+                ModelState.AddModelError("TagErro", "Tem que Seleccionar pelo menos uma tag");
+            }
+            if(file == null)
+            {
+                ModelState.AddModelError("ErroFicheiro", "Tem que Submeter pelo menos um ficheiro");
+            }
+
+            if(file != null)
+            {
+                if (file.ContentType != ".Zip")
+                {
+                    ModelState.AddModelError("Zip", "Compacte os ficheiros e envie em formato .Zip");
+                }
+            }
+           
+            
+
             if (ModelState.IsValid)
             {
                 Desafio desafio = new Desafio();
@@ -216,11 +236,13 @@ namespace CrowdTouring_Projeto.Models
                 desafio.DataCriacao = DateTime.Now;
                 desafio.TipoAvaliacao = TipoAvaliacao;
                 desafio.valor = model.ValorMonetario;
+                desafio.DataFinalSolucoes = model.DesafioSolucao;
                 desafio.ApplicationUserId = User.Identity.GetUserId();
 
                 var listaTags = atualizarTagsDesafio(desafio, selectedTag);
                 desafio.Tags = listaTags;
 
+                
 
                 db.Desafios.Add(desafio);
 
