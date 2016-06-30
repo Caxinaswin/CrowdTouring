@@ -1,27 +1,51 @@
 ﻿@model CrowdTouring_Projeto.Models.EditarUtilizadorViewModel
 
 <script src="~/Scripts/bootstrap-filestyle.min.js"></script>
-@using (Html.BeginForm("EditarUtilizador", "Account", null, FormMethod.Post,
+<script>
+
+
+    function readURL()
+    {
+        input = $("#ImagePath").val();
+        if(input.files && input.files[0])
+        {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $("#fotografia").attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    function apagarFoto()
+    {
+        document.getElementById("fotografia").src = "/StaticImages/default-user-image.png";
+    }
+
+</script>
+@using (Html.BeginForm("_InformacaoBasicaUtilizador", "Account", null, FormMethod.Post,
                 new { enctype = "multipart/form-data" }))
 {
     <fieldset class="scheduler-border">
         <legend class="scheduler-border">Informacão Básica</legend>
         <fieldset class="col-md-3">
+            @Html.HiddenFor(m => m.ApagarFoto)
             @if (Model.ImagePath != null)
-        {
+            {
                 <img src="~/Images/@Html.DisplayFor(modelItem => modelItem.ImagePath)" width="150" height="150" id="fotografia" />
                 <div style="margin-top:10px">
-                    <input id="ImagePath" type="file" name="file" class="filestyle" data-input="false" data-buttonText="Altera a tua foto" />
+                    <input id="ImagePath" onchange="readURL()" type="file" name="file" class="filestyle" data-input="false" data-buttonText="Altera a tua foto" />
                 </div>
-                <div style="margin-top:30px">
-                    <input id="ImagePath" type="file" name="file" class="filestyle" data-input="false" data-buttonText="Apagar Foto" />
+                <div style="margin-top:20px">
+                    <button type="button" onclick="apagarFoto()" class="btn btn-default"><span class="glyphicon glyphicon-remove"></span>Apagar foto</button>
                 </div>
             }
             else
             {
                 <img src="~/StaticImages/default-user-image.png" width="150" height="150" id="ImagePath" />
                 <div style="margin-top:10px">
-                    <input type="file" name="file" class="filestyle" data-input="false" data-buttonText="Carrega  uma foto" />
+                    <input id="ImagePath2" type="file" name="file" class="filestyle" data-input="false" data-buttonText="Carrega  uma foto" />
                 </div>
             }
         </fieldset>
@@ -31,6 +55,7 @@
                     @Html.LabelFor(m => m.Utilizador, "Utilizador:", new { @class = "col-md-3 control-label", style = "text-align:right" })
                     <div class="col-md-9">
                         <p class="form-control-static">@Model.Utilizador</p>
+                        @Html.HiddenFor(m => m.Utilizador)
                         @Html.ValidationMessageFor(model => model.Utilizador, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -38,6 +63,7 @@
                     @Html.LabelFor(m => m.TipoUtilizador, new { @class = "col-md-3 control-label" })
                     <div class="col-md-9">
                         <p class="form-control-static">@Model.TipoUtilizador</p>
+                        @Html.HiddenFor(m => m.TipoUtilizador)
                         @Html.ValidationMessageFor(model => model.TipoUtilizador, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -45,6 +71,7 @@
                     @Html.LabelFor(m => m.DataNascimento, new { @class = "col-md-3 control-label" })
                     <div class="col-md-9">
                         <p class="form-control-static">@Model.DataNascimento</p>
+                        @Html.HiddenFor(m => m.DataNascimento)
                         @Html.ValidationMessageFor(model => model.DataNascimento, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -52,6 +79,7 @@
                     @Html.LabelFor(m => m.Email, "Email:", new { @class = "col-md-3 control-label" })
                     <div class="col-md-9">
                         <p class="form-control-static">@Model.Email</p>
+                        @Html.HiddenFor(m => m.Email)
                         @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -77,6 +105,5 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script src="~/Scripts/CrowdTouring.js"></script>
-
-
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
 }

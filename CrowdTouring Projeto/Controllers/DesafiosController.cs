@@ -267,14 +267,14 @@ namespace CrowdTouring_Projeto.Models
             return View(model);
         }
 
-        [HttpPost]
-        public ActionResult listaDesafiosTag(string listaTags)
+        public ActionResult listaDesafiosTag(string Id)
         {
-            System.Diagnostics.Debug.WriteLine(listaTags);
-            var desafios = db.Desafios.Include(d => d.TipoAvaliacao).Include(d => d.User).Include(d => d.Tags).Where(c => c.Tags.Any(s => listaTags == s.NomeTag));
+            System.Diagnostics.Debug.WriteLine(Id);
+            var desafiosRecentes = db.Desafios.Include(d => d.TipoAvaliacao).Include(d => d.User).Include(d => d.Tags);
+            var desafios = db.Desafios.Include(d => d.TipoAvaliacao).Include(d => d.User).Include(d => d.Tags).Where(c => c.Tags.Any(s => Id == s.NomeTag));
             var count = db.Desafios.Count();
             carregaInformacaoUtilizador();
-            carregaRecentes(desafios,count);
+            carregaRecentes(desafiosRecentes,count);
             carregaFiltros();
 
             return View("Index",desafios.ToList());

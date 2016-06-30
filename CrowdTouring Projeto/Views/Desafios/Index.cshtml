@@ -52,7 +52,7 @@
                     foreach (var i in utilizador.tags)
                     {
                         <ul class="tagMargin">
-                            <li><a href="##" name="listaTags" class="tag" style="font-size:9px;color:@i.cor">@i.NomeTag</a></li>
+                            <li><a href='@Url.Action("listaDesafiosTag", "Desafios", new { id = @i.NomeTag })' name="listaTags" class="tag" style="font-size:9px;color:@i.cor">@i.NomeTag</a></li>
                         </ul>
                     }
                     <br /><br />
@@ -91,7 +91,7 @@
                 </legend>
                 @foreach (var i in Model)
             {
-                    <div class="col-md-10" style="border:2px solid #669999;margin-left:5px;margin-top:5px;border-radius:8px">
+                    <div class="col-md-10 secc" style="border:2px solid #669999;margin-left:5px;margin-top:5px;border-radius:8px">
                         <div class="col-md-2" style="border-right:2px solid #d3d3d3; padding-left:2px">
                             <div class="row" style="padding-top:5px">
                                 <div class="col-md-6" style="text-align:center">
@@ -133,15 +133,15 @@
                                     <div class="col-md-5">
                                         @if (@i.User.Id == User.Identity.GetUserId())
                                         {
-                                            <p class="fonteDesafio datas"><span>Criado por <a href=@Url.Action("EditarUtilizador", "Account")>@i.User.Nome</a> dia @i.DataCriacao.ToShortDateString() ás @i.DataCriacao.Hour<span>:</span>@i.DataCriacao.Minute </span></p>
+                                            <p class="fonteDesafio datas"> Criado por <a href=@Url.Action("EditarUtilizador", "Account")>@i.User.Nome </a>@TimeSinceEvent(@i.DataCriacao)</p>
                                         }
                                         else
                                         {
-                                            <p class="fonteDesafio datas"><span>Criado por <a href=@Url.Action("VisualizarPerfilUtilizador","Account",new { @id = i.User.UserName})>@i.User.Nome</a> dia @i.DataCriacao.ToShortDateString() ás @i.DataCriacao.Hour<span>:</span>@i.DataCriacao.Minute </span></p>
+                                            <p class="fonteDesafio datas"> Criado por <a href=@Url.Action("VisualizarPerfilUtilizador","Account",new { @id = i.User.UserName})>@i.User.Nome </a>@TimeSinceEvent(@i.DataCriacao)</p>
                                         }
                                     </div>
                                     <div class="col-md-offset-2 col-md-5">
-                                        <p class="fonteDesafio datas">Termina dia @i.DataCriacao.AddDays(5)</p>
+                                        <p class="fonteDesafio datas">@TimeSinceEvent(@i.DataCriacao)</p>
                                     </div>
                                 </div>
                             </div>
@@ -161,18 +161,24 @@
 
 @Scripts.Render("~/bundles/jquery")
 <script src="~/Scripts/Modal.js"></script>
-<script>
-    $(".tag").click(function () {
-        $.ajax({
-            url: '@Url.Action("listaDesafiosTag", "Desafios")',
-            type: 'post',
-            dataType: 'json',
-            data: { listaTags: this.innerText },
-            success: function (data) {
-                console.log(data);
-            },
-        });
-    });
-</script>
+
+@functions{
+    public static string TimeSinceEvent(DateTime eventTime)
+    {
+        TimeSpan timeSince = DateTime.Now - eventTime;
+        if (timeSince.Days > 365)
+            return string.Format("Criado á um ano atrás");
+        else if (timeSince.Days > 30)
+            return string.Format("Criado á um mês atrás");
+        else if (timeSince.Days > 0)
+            return string.Format("Criado á {0} dias atrás", timeSince.Days);
+        else if (timeSince.Hours > 0)
+            return string.Format("Criado á {0} horas atrás", timeSince.Hours);
+        else if (timeSince.Minutes > 0)
+            return string.Format("Criado á {0} minutos atrás", timeSince.Minutes);
+        else
+            return string.Format("Criado á {0} segundos atrás", timeSince.Seconds);
+    }
+}
    
 

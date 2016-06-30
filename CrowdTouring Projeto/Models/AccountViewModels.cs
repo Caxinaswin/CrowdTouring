@@ -111,23 +111,6 @@ namespace CrowdTouring_Projeto.Models
     {
         public string Utilizador { get; set; }
 
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
-        [DataType(DataType.Password)]
-        [Display(Name = "Password Antiga")]
-        public string Password { get; set; }
-
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
-        [DataType(DataType.Password)]
-        [Display(Name = "Nova Password")]
-        public string NovaPassword { get; set; }
-
-        [DataType(DataType.Password)]
-        [Required(ErrorMessage = "Precisa de inserir uma confirmação de password")]
-        [Display(Name = "Confirmar nova password")]
-        [Compare("NovaPassword", ErrorMessage = "The password and confirmation password do not match.")]
-        public string ConfirmPassword { get; set; }
-
-
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
@@ -154,6 +137,12 @@ namespace CrowdTouring_Projeto.Models
 
         public int ImageId { get; set; }
         public string ImagePath { get; set; }
+        public bool ApagarFoto { get; set; }
+        public EditarUtilizadorViewModel()
+        {
+            ApagarFoto = false;
+        }
+
 
 
     }

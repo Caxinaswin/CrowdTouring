@@ -276,7 +276,7 @@ namespace CrowdTouring_Projeto.Controllers
         }
 
         [HttpPost]
-        public ActionResult _InformacaoBasica(EditarUtilizadorViewModel model, HttpPostedFileBase file)
+        public ActionResult _InformacaoBasicaUtilizador(EditarUtilizadorViewModel model, HttpPostedFileBase file)
         {
             var user = User.Identity.GetUserId();
             var utilizador = db.Users.Where(d => d.Id == user).First();
@@ -297,6 +297,11 @@ namespace CrowdTouring_Projeto.Controllers
                     model.ImagePath = filename;
                 }
                 utilizador.ImagePath = model.ImagePath;
+
+                if(model.ApagarFoto == true)
+                {
+                    utilizador.ImagePath = null;
+                }
 
             }
  
@@ -374,7 +379,7 @@ namespace CrowdTouring_Projeto.Controllers
         // POST: Desafios/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+       /* [HttpPost]
         public async Task<ActionResult> EditarUtilizador(EditarUtilizadorViewModel model, string[] selectedTag, HttpPostedFileBase file)
         {
             var id = User.Identity.GetUserId();
@@ -431,7 +436,7 @@ namespace CrowdTouring_Projeto.Controllers
             model.Utilizador = user.Nome;
             model.Email = user.Email;
             return View(model);
-        }
+        }*/
 
         public ActionResult VisualizarPerfilUtilizador(string id)
         {
