@@ -27,9 +27,55 @@ namespace CrowdTouring_Projeto.Models
             carregaInformacaoUtilizador();
             carregaRecentes(desafios,count);
             carregaFiltros();
+            verificaAlteraEstadoDesafio(desafios);
 
 
             return View(desafios.ToList());
+        }
+
+        [Authorize]
+        public ActionResult AceitacaoSolucoes()
+        {
+            var desafios = db.Desafios.Include(d => d.TipoAvaliacao).Include(d => d.User).Include(d => d.Tags).OrderByDescending(d => d.DataCriacao);
+            var count = db.Desafios.Count();
+            carregaInformacaoUtilizador();
+            carregaRecentes(desafios, count);
+            var desafios2 = db.Desafios.Include(d => d.TipoAvaliacao).Include(d => d.User).Include(d => d.Tags).OrderByDescending(d => d.DataCriacao).Where(d => d.TipoAvaliacao.TipoAvaliacaoId == 1);
+            carregaFiltros();
+            verificaAlteraEstadoDesafio(desafios);
+
+
+            return View("Index", desafios2.ToList());
+        }
+
+        [Authorize]
+        public ActionResult FechadoVotacao()
+        {
+            var desafios = db.Desafios.Include(d => d.TipoAvaliacao).Include(d => d.User).Include(d => d.Tags).OrderByDescending(d => d.DataCriacao);
+            var count = db.Desafios.Count();
+            carregaInformacaoUtilizador();
+            carregaRecentes(desafios, count);
+            var desafios2 = db.Desafios.Include(d => d.TipoAvaliacao).Include(d => d.User).Include(d => d.Tags).OrderByDescending(d => d.DataCriacao).Where(d => d.TipoAvaliacao.TipoAvaliacaoId == 2);
+            carregaFiltros();
+            verificaAlteraEstadoDesafio(desafios);
+
+
+            return View("Index", desafios2.ToList());
+        }
+
+        [Authorize]
+        public ActionResult FechadoAvaliacao()
+        {
+            var desafios = db.Desafios.Include(d => d.TipoAvaliacao).Include(d => d.User).Include(d => d.Tags).OrderByDescending(d => d.DataCriacao);
+            var count = db.Desafios.Count();
+            carregaInformacaoUtilizador();
+            carregaRecentes(desafios, count);
+            var desafios2 = db.Desafios.Include(d => d.TipoAvaliacao).Include(d => d.User).Include(d => d.Tags).OrderByDescending(d => d.DataCriacao).Where(d => d.TipoAvaliacao.TipoAvaliacaoId == 3);
+            carregaFiltros();
+            verificaAlteraEstadoDesafio(desafios);
+
+
+            return View("Index", desafios2.ToList());
         }
 
         private void carregaInformacaoUtilizador()
@@ -118,6 +164,10 @@ namespace CrowdTouring_Projeto.Models
             detalhes.idUtilizador = user.Id;
             detalhes.nomeUtilizador = user.UserName;
             detalhes.DesafioId = desafio.DesafioId;
+            detalhes.TipoAvaliacao = desafio.TipoAvaliacao.Descricao;
+            detalhes.DataFinalAceitacao = desafio.DataFinalSolucoes;
+            detalhes.diasAvaliacao = desafio.DiasAvaliacao;
+            detalhes.diasVotacao = desafio.DiasVotacao;
 
 
             System.Diagnostics.Debug.WriteLine(desafioVisualizacoes);
@@ -217,7 +267,8 @@ namespace CrowdTouring_Projeto.Models
 
             if(file != null)
             {
-                if (file.ContentType != ".Zip")
+                int indexOf = file.ContentType.IndexOf("zip"); 
+                if (indexOf == -1)
                 {
                     ModelState.AddModelError("Zip", "Compacte os ficheiros e envie em formato .Zip");
                 }
@@ -238,6 +289,8 @@ namespace CrowdTouring_Projeto.Models
                 desafio.valor = model.ValorMonetario;
                 desafio.DataFinalSolucoes = model.DesafioSolucao;
                 desafio.ApplicationUserId = User.Identity.GetUserId();
+                desafio.DiasAvaliacao = obtemDias(model.DesafioSolucao);
+                desafio.DiasVotacao = obtemDias(model.DesafioSolucao);
 
                 var listaTags = atualizarTagsDesafio(desafio, selectedTag);
                 desafio.Tags = listaTags;
@@ -324,15 +377,8 @@ namespace CrowdTouring_Projeto.Models
             carregaInformacaoUtilizador();
             carregaRecentes(desafios, count);
             carregaFiltros();
-            var verificaExite = desafios.Any(d => d.TipoTrabalho == desafio);
-            if (desafios.Any(d => d.TipoTrabalho == desafio) == true)
-            {
-                return View("Index", desafios.Where(d => d.TipoTrabalho == desafio).ToList());
-            }
-            else
-            {
-                return new HttpNotFoundResult("O desafio que indicou não existe");
-            }
+            return View("Index", desafios.Where(d => d.TipoTrabalho == desafio).ToList());
+
           
         }
 
@@ -419,6 +465,52 @@ namespace CrowdTouring_Projeto.Models
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public void verificaAlteraEstadoDesafio(IQueryable<Desafio> desafios)
+        {
+            TipoAvaliacao TipoAvaliacaoAberto = db.TiposAvaliacao.Where(i => i.TipoAvaliacaoId == 1).FirstOrDefault();
+            TipoAvaliacao TipoAvaliacaoSolucao = db.TiposAvaliacao.Where(i => i.TipoAvaliacaoId == 2).FirstOrDefault();
+            TipoAvaliacao TipoAvaliacaoEmAvaliacao = db.TiposAvaliacao.Where(i => i.TipoAvaliacaoId == 3).FirstOrDefault();
+            TipoAvaliacao TipoAvaliacaoFechado = db.TiposAvaliacao.Where(i => i.TipoAvaliacaoId == 4).FirstOrDefault();
+            DateTime data = new DateTime(2016,07,17);
+            foreach (var desafio in desafios)
+            {
+                var diasVotacao = desafio.DiasVotacao;
+                var diasAvaliacao = desafio.DiasAvaliacao + desafio.DiasVotacao;
+
+                DateTime dataFinal = desafio.DataFinalSolucoes.AddDays(diasAvaliacao + 1);
+
+
+                if (dataFinal <= data)
+                {
+                    desafio.TipoAvaliacao = TipoAvaliacaoFechado;
+                }
+                else if (desafio.DataFinalSolucoes.AddDays(diasAvaliacao) <= data)
+                {
+                    desafio.TipoAvaliacao = TipoAvaliacaoEmAvaliacao;
+                }
+                else if (desafio.DataFinalSolucoes.AddDays(diasVotacao) <= data)
+                {
+                    desafio.TipoAvaliacao = TipoAvaliacaoSolucao;
+                }
+                else if (desafio.DataFinalSolucoes < data)
+                {
+                    desafio.TipoAvaliacao = TipoAvaliacaoAberto;
+                }
+            }
+
+            db.SaveChanges();
+        }
+
+
+        public static int obtemDias(DateTime Solucoes)
+        {
+           TimeSpan diferenca = (Solucoes - DateTime.Now);
+           var dias = diferenca.TotalDays;
+           dias = dias / 2;
+           int diasInteiro = (int)Math.Round(dias);
+           return diasInteiro;
         }
     }
 }

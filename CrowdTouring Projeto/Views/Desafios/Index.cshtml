@@ -12,15 +12,32 @@
         </div>
     </div>
     <div class="row" style="margin-top:15px;margin-right:20px">
-        <div class="col-md-offset-3 col-md-2">
-            <button class="btn btn-primary" data-target="#DesafioModal" data-toggle="modal" id="CriarDesafio" style="margin-left:40px">Criar desafio</button>
-        </div>
+        @if (HttpContext.Current.User.IsInRole("Cliente"))
+        {
+            <div class="col-md-offset-3 col-md-2">
+              <button class="btn btn-primary" id="CriarDesafio" onclick="@("window.location.href='" + @Url.Action("Create", "Desafios") + "'");" style="margin-left:40px">Criar desafio</button>
+            </div>
+        }
+        @if (HttpContext.Current.User.IsInRole("Cliente"))
+        {
         <div class="col-md-3">
             @using (Html.BeginForm("filtrarDesafios", "Desafios", FormMethod.Post))
             {
                 @Html.DropDownList("filtro", null, new { @class = "form-control", onchange = "this.form.submit();", @style = "margin-left:20px" })
+                @Html.Hidden("",new { @class = "textoFiltro" })
             }
         </div>
+        }
+        else
+        {
+         <div class="col-md-offset-3 col-md-3">
+            @using (Html.BeginForm("filtrarDesafios", "Desafios", FormMethod.Post))
+            {
+                @Html.DropDownList("filtro", null, new { @class = "form-control", onchange = "this.form.submit();", @style = "margin-left:20px" })
+                @Html.Hidden("", new { @class = "textoFiltro" })
+            }
+         </div>
+        }
         @using (Html.BeginForm("pesquisarDesafio", "Desafios", FormMethod.Post))
         {
             <div class="input-group col-md-3" style="width:260px">
@@ -84,9 +101,9 @@
             <fieldset class="scheduler-border">
                 <legend class="scheduler-border">
                     <ul class="nav nav-tabs" style="border-bottom:1px solid gray;margin-top:15px">
-                        <li><a href="#" style="font-size:10px;border-left:2px solid #d3d3d3;border-right:2px solid #d3d3d3;border-top:2px solid #d3d3d3">A aceitar soluções</a></li>
-                        <li><a href="#" style="font-size:10px;border-left:2px solid #d3d3d3;border-right:2px solid #d3d3d3;border-top:2px solid #d3d3d3">Fechado para votação</a></li>
-                        <li><a href="#" style="font-size:10px;border-left:2px solid #d3d3d3;border-right:2px solid #d3d3d3;border-top:2px solid #d3d3d3">Fechado para avaliação</a></li>
+                        <li id="textoAceitacaoSolucoes"><a href='@Url.Action("AceitacaoSolucoes", "Desafios")' style="font-size:10px;border-left:2px solid #d3d3d3;border-right:2px solid #d3d3d3;border-top:2px solid #d3d3d3">A aceitar soluções</a></li>
+                        <li id="textoFechadoVotacao"><a href='@Url.Action("FechadoVotacao", "Desafios")' style="font-size:10px;border-left:2px solid #d3d3d3;border-right:2px solid #d3d3d3;border-top:2px solid #d3d3d3">Fechado para votação</a></li>
+                        <li id="textoFechadoAvaliacao"><a href='@Url.Action("FechadoAvaliacao", "Desafios")' style="font-size:10px;border-left:2px solid #d3d3d3;border-right:2px solid #d3d3d3;border-top:2px solid #d3d3d3">Fechado para avaliação</a></li>
                     </ul>
                 </legend>
                 @foreach (var i in Model)
@@ -133,15 +150,12 @@
                                     <div class="col-md-5">
                                         @if (@i.User.Id == User.Identity.GetUserId())
                                         {
-                                            <p class="fonteDesafio datas"> Criado por <a href=@Url.Action("EditarUtilizador", "Account")>@i.User.Nome </a>@TimeSinceEvent(@i.DataCriacao)</p>
+                                            <p class="fonteDesafio datas"><a href=@Url.Action("EditarUtilizador", "Account")>@i.User.Nome </a>@TimeSinceEvent(@i.DataCriacao)</p>
                                         }
                                         else
                                         {
-                                            <p class="fonteDesafio datas"> Criado por <a href=@Url.Action("VisualizarPerfilUtilizador","Account",new { @id = i.User.UserName})>@i.User.Nome </a>@TimeSinceEvent(@i.DataCriacao)</p>
+                                            <p class="fonteDesafio datas"><a href=@Url.Action("VisualizarPerfilUtilizador","Account",new { @id = i.User.UserName})>@i.User.Nome </a>@TimeSinceEvent(@i.DataCriacao)</p>
                                         }
-                                    </div>
-                                    <div class="col-md-offset-2 col-md-5">
-                                        <p class="fonteDesafio datas">@TimeSinceEvent(@i.DataCriacao)</p>
                                     </div>
                                 </div>
                             </div>
@@ -154,14 +168,23 @@
         </div>
 
     </div>
-    <div class="modal" id="modal" style="margin-top:100px">
-
-    </div>
 </div>
 
 @Scripts.Render("~/bundles/jquery")
 <script src="~/Scripts/Modal.js"></script>
+<script>
+    $("#textoAceitacaoSolucoes").click(function(){
+        $(".textoFiltro").val() = "AceitacaoSolucoes";
+    })
 
+    $("#textoFechadoVotacao").click(function () {
+        $(".textoFiltro").val() = "FechadoVotacao";
+    })
+
+    $("#textoFechadoAvaliacao").click(function () {
+        $(".textoFiltro").val() = "FechadoAvaliacao";
+    })
+</script>
 @functions{
     public static string TimeSinceEvent(DateTime eventTime)
     {

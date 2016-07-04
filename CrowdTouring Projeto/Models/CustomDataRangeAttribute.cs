@@ -9,7 +9,7 @@ namespace CrowdTouring_Projeto.Models
 {
     public class CustomDateRangeAttribute : RangeAttribute
     {
-        public CustomDateRangeAttribute() : base(typeof(DateTime), DateTime.Now.ToString(), DateTime.Now.AddDays(30).ToString())
+        public CustomDateRangeAttribute() : base(typeof(DateTime), DateTime.Now.AddDays(1).ToString(), DateTime.Now.AddDays(30).ToString())
         { }
     }
 }

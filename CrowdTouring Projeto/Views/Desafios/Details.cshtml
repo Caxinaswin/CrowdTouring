@@ -1,4 +1,5 @@
 ﻿@model CrowdTouring_Projeto.ViewModel.DetalhesDesafio
+@using Microsoft.AspNet.Identity;
 @{
     ViewBag.Title = "Details";
 }
@@ -16,7 +17,9 @@
         @Html.HiddenFor(m => m.lon, new { id = "lon2" })      
         <div class="row marginDesafio" style="margin-top:60px">
             <p class="fontDesafio">Caminho a percorrer para chegar ao desafio:</p>
-            <div id="mapaLocal" style="padding-top:20px;width:800px; height:300px">
+            <p><span style="color:green">A</span> - A sua localização atual</p>
+            <p><span style="color:red">B</span> - Local associado ao desafio</p>
+            <div id="mapaLocal" style="padding-top:20px;width:900px; height:300px">
 
             </div>
         </div>
@@ -28,7 +31,29 @@
             <div class="col-md-2">
                 <p id="valorDesafio">@Model.ValorMonetario €</p>
                 <p id="pontuacao">1 Ponto(s)</p>
-            </div>         
+            </div>   
+            <div class="col-md-8">
+                @if (@Model.TipoAvaliacao == "AceitarSolucoes")
+                {
+                    <p style="font-size:15px"><span style="color:orange">Info:</span>Este desafio encontra-se em fase de @Model.TipoAvaliacao, e termina dia @Model.DataFinalAceitacao</p>
+                }
+                else if (@Model.TipoAvaliacao == "Votacao")
+                {
+                    DateTime data = @Model.DataFinalAceitacao;
+                    var dataVotacao = data.AddDays(Model.diasVotacao);
+                    <p style="font-size:15px"><span style="color:orange">Info:</span>Este desafio encontra-se em fase de @Model.TipoAvaliacao, e termina dia @dataVotacao</p>
+                }
+                else if (@Model.TipoAvaliacao == "Avaliacao")
+                {
+                    DateTime data = @Model.DataFinalAceitacao;
+                    var dataAvaliacao = data.AddDays(Model.diasVotacao + Model.diasAvaliacao);
+                    <p style="font-size:15px"><span style="color:orange">Info:</span>Este desafio encontra-se em fase de @Model.TipoAvaliacao, e termina dia @dataAvaliacao</p>
+                }
+                else if (@Model.TipoAvaliacao == "Fechado")
+                {
+                    <p style="font-size:15px"><span style="color:orange">Info:</span>Este desafio encontra-se em fase de @Model.TipoAvaliacao, e termina dia @Model.dataFinal</p>
+                }
+            </div>      
         </div>
         <div class="row">
             <div class="col-md-offset-1 col-md-2" style="margin-left:50px">
@@ -45,20 +70,32 @@
                 }
             }
         </div>
-        <div class="row marginDesafio" style="margin-top:50px">
-        @using (Html.BeginForm("Create", "Solucoes", FormMethod.Get, new { @class = "form", enctype = "multipart/form-data" }))
+        @if (HttpContext.Current.User.IsInRole("Resolvedor"))
         {
-            @Html.HiddenFor(a => a.DesafioId)
-            <button type="submit" class="btn btn-primary">Submete a tua solução</button>
+            <div class="row marginDesafio" style="margin-top:50px">
+            @using (Html.BeginForm("Create", "Solucoes", FormMethod.Get, new { @class = "form", enctype = "multipart/form-data" }))
+            {
+                @Html.HiddenFor(a => a.DesafioId)
+                <button type="submit" class="btn btn-primary">Submete a tua solução</button>
+            }
+            </div>
         }
-        </div>
         <div class="row"  style="margin-top:50px">
             <div class="col-md-4">
                 <text>Termina dia @Model.DataCriacao + 15</text>
             </div>
-            <div class="col-md-offset-4 col-md-4">
-                <text>Criado por <a href="#">@Model.nomeUtilizador</a> no dia @Model.DataCriacao</text>
-            </div>
+            @if (Model.idUtilizador == User.Identity.GetUserId())
+            {
+                <div class="col-md-offset-4 col-md-4">
+                    <text>Criado por <a href=@Url.Action("EditarUtilizador", "Account")>@Model.nomeUtilizador</a> @TimeSinceEvent(@Model.DataCriacao)</text>
+                </div>
+            }
+            else
+            {
+                <div class="col-md-offset-4 col-md-4">
+                    <text>Criado por <a href=@Url.Action("VisualizarPerfilUtilizador","Account",new { @id = @Model.nomeUtilizador})>@Model.nomeUtilizador</a> @TimeSinceEvent(@Model.DataCriacao)</text>
+                </div>
+            }
         </div>
     </div>
 </div>
@@ -89,13 +126,11 @@
         }
     </div>
 </div>
+<br/>
 <div class="modal" id="modal" style="margin-top:50px;">
 
 </div>
 
-<p>
-    @Html.ActionLink("Back to List", "Index")
-</p>
 
 @section scripts{
     <script>
@@ -108,6 +143,25 @@
         event.preventDefault();
     });
 </script>
+}
+
+@functions{
+    public static string TimeSinceEvent(DateTime eventTime)
+    {
+        TimeSpan timeSince = DateTime.Now - eventTime;
+        if (timeSince.Days > 365)
+            return string.Format("há um ano atrás");
+        else if (timeSince.Days > 30)
+            return string.Format("há um mês atrás");
+        else if (timeSince.Days > 0)
+            return string.Format("há {0} dias atrás", timeSince.Days);
+        else if (timeSince.Hours > 0)
+            return string.Format("há {0} horas atrás", timeSince.Hours);
+        else if (timeSince.Minutes > 0)
+            return string.Format("há {0} minutos atrás", timeSince.Minutes);
+        else
+            return string.Format("há {0} segundos atrás", timeSince.Seconds);
+    }
 }
 
 

@@ -4,19 +4,13 @@
     ViewBag.Title = "Create";
 }
 
-  <div class="modal-dialog" style="width:1000px">
-
         <button type="button" class="close" data-dismiss="modal">&times;</button>
 
 @using (Html.BeginForm("Create", "Desafios", FormMethod.Post, new {@class = "form form-horizontal", enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    <div class="modal-content">
-    <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title">Cria o teu desafio</h4>
-    </div>
-    <div class="modal-body">
     <div class="form-group" >
         @Html.LabelFor(m => m.TipoTrabalho, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
@@ -35,6 +29,7 @@
             @Html.LabelFor(m => m.DesafioSolucao, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
                 @Html.TextBoxFor(m => m.DesafioSolucao, new { @class = "form-control", type = "date" })
+                @Html.ValidationMessageFor(m => m.DesafioSolucao,"",new { @class = "text-danger" })
             </div>
         </div>
     <br />
@@ -81,13 +76,10 @@
         <input type="file" name="file" class="marginTop" />     
         @Html.ValidationMessage("ErroFicheiro", new { @class = "text-danger" })
         @Html.ValidationMessage("Zip", new { @class = "text-danger" })  
-        </div>
         <div class="modal-footer">
             <button type="submit" class="btn btn-lg btn-primary marginTop" id="criarDesafio">Criar Desafio</button>
         </div>
-        </div>
                         }
-    </div>
     
 
             <script src="~/Scripts/googleMaps.js"></script>

@@ -3,31 +3,52 @@
     ViewBag.Title = "Create";
 }
 
-<div class="col-md-offset-1 col-md-9" style="background-color:#FFFF99;margin-top:40px;border-radius:9px">
+<div class="col-md-offset-1 col-md-9" style="background-color:#f7c36d;margin-top:40px;border-radius:9px">
 
-    <h2 style="text-align:center">@Model.NomeDesafio</h2>
-    @using (Html.BeginForm("Create", "Solucoes", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    @using (Html.BeginForm("Create", "Solucoes", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal" }))
     {
+        @Html.AntiForgeryToken()
+        <h4 style="text-align:left;margin-left:145px">Desafio - @Model.NomeDesafio</h4>
+        @Html.HiddenFor(m => m.NomeDesafio)
         <div class="form-group" style="margin-top:40px">
-            @Html.LabelFor(m => m.NomeSolucao, "Solucao", new { @class = "col-md-2 control-label" })
+            @Html.LabelFor(m => m.NomeSolucao, "Solucao", new { @class = "col-md-2 control-label",Id="#caracteres" })
             <div class="col-md-10">
                 @Html.TextBoxFor(m => m.NomeSolucao, "Solucao", new { @class = "form-control", maxlength = 50, id = "TituloDesafio", autocomplete = "off" })
+                @Html.ValidationMessageFor(m => m.NomeSolucao, "", new { @class = "text-danger" })
             </div>
         </div>
-        <div class="form-group" style="margin-top:120px">
+        <div class="form-group">
             @Html.LabelFor(m => m.DescricaoSolucao, "Descricao", new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
                 @Html.TextAreaFor(m => m.DescricaoSolucao, 10, 25, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.DescricaoSolucao, "", new { @class = "text-danger" })
             </div>
         </div>
         @Html.HiddenFor(m => m.IdDesafio)
-        <div class="form-group" style="padding-top:250px;margin-left:150px">
+        <div class="form-group" style="margin-left:150px">
             <input type="file" name="file" class="marginTop" />
+            @Html.ValidationMessage("ErroFicheiro2", new { @class = "text-danger" })
+            @Html.ValidationMessage("Zip2", new { @class = "text-danger" })
         </div>
         <div class="row">
-            <button type="submit" class="btn btn-primary" style="margin-top:60px;margin-left:165px">Criar Solução</button>
+            <button type="submit" class="btn btn-success" style="margin-top:60px;margin-left:165px">Criar Solução</button>
         </div>
+        <br/>
     }
     </div>
+
+
+<script>
+var text_max = 50;
+$('#caracteres').html(text_max + ' characters remaining');
+
+$('#TituloDesafio').keyup(function () {
+var text_length = $('#TituloDesafio').val().length;
+var text_remaining = text_max - text_length;
+
+$('#caracteres').html(text_remaining + 'caracteres restantes ');
+});
+</script>
+
    
 

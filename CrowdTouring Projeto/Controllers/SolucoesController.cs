@@ -48,7 +48,21 @@ namespace CrowdTouring_Projeto.Controllers
         [HttpPost]
         public ActionResult Create(SolucaoDesafio SolucaoDesafio,HttpPostedFileBase file)
         {
-            if(ModelState.IsValid)
+            if (file == null)
+            {
+                ModelState.AddModelError("ErroFicheiro2", "Tem que Submeter pelo menos um ficheiro");
+            }
+
+            if (file != null)
+            {
+                int indexOf = file.ContentType.IndexOf("zip");
+                if (indexOf == -1)
+                {
+                    ModelState.AddModelError("Zip2", "Compacte os ficheiros e envie em formato .Zip");
+                }
+            }
+
+            if (ModelState.IsValid)
             {
                 var Solucao = new Solucao();
                 Solucao.DesafioId = SolucaoDesafio.IdDesafio;
@@ -78,7 +92,7 @@ namespace CrowdTouring_Projeto.Controllers
                     return RedirectToAction("Details", "Desafios", new { id = SolucaoDesafio.IdDesafio });
                 }
             }
-            return View();
+            return View(SolucaoDesafio);
         }
 
         // GET: Solucoes/Edit/5

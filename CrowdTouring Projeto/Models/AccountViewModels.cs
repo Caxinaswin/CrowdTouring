@@ -98,6 +98,8 @@ namespace CrowdTouring_Projeto.Models
 
         public bool Notificacao { get; set; }
 
+        public string role { get; set; }
+
     }
 
     public class TagUtilizador

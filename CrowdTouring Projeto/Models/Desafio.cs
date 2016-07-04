@@ -28,10 +28,12 @@ namespace CrowdTouring_Projeto.Models
         public double lon { get; set; }
         public int IdSolucaoVencedora { get; set; }
         [Required]
-        [CustomDateRange(ErrorMessage = "tem que estar entre")]
+        [CustomDateRange(ErrorMessage = "tem que estar entre {0} e {1}")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{MMMM/d/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime DataFinalSolucoes { get; set; }
+        public int DiasAvaliacao { get; set; }
+        public int DiasVotacao { get; set; }
         public virtual ICollection<Tag> Tags { get; set; }
         public virtual ICollection<Solucao> Solucao { get; set; }
 

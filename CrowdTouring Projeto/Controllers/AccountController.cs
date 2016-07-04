@@ -176,6 +176,7 @@ namespace CrowdTouring_Projeto.Controllers
         {
             var Roles = db.Roles.Where(d => d.Name != "Admin").ToList();
             ViewBag.Roles = new SelectList(Roles, "Id", "Name");
+            var Roles2 = db.Roles.Where(d => d.Id == model.TipoUtilizador).Single();
                 if (ModelState.IsValid)
             {               
                 var user = new ApplicationUser { UserName = model.Nome, Email = model.Email, Sobre = model.Sobre,DataNascimento = model.DataNascimento, Telemóvel = model.Telemóvel, Nome = model.Nome, TipoUtilizador = model.TipoUtilizador, Notificacao = model.Notificacao};
@@ -189,6 +190,7 @@ namespace CrowdTouring_Projeto.Controllers
                     //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
 
                     string callbackUrl = await SendEmailConfirmationTokenAsync(user.Id, "Account confirmation");
+                    UserManager.AddToRole(user.Id, Roles2.Name);
 
                     // Uncomment to debug locally 
                     // TempData["ViewBagLink"] = callbackUrl;

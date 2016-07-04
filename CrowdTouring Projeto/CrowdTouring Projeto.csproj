@@ -284,6 +284,14 @@
     <Compile Include="Migrations\201606131745400_another2.Designer.cs">
       <DependentUpon>201606131745400_another2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201607040916531_days6.cs" />
+    <Compile Include="Migrations\201607040916531_days6.Designer.cs">
+      <DependentUpon>201607040916531_days6.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201607041650424_days7.cs" />
+    <Compile Include="Migrations\201607041650424_days7.Designer.cs">
+      <DependentUpon>201607041650424_days7.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Anexo.cs" />
@@ -442,6 +450,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201606131745400_another2.resx">
       <DependentUpon>201606131745400_another2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607040916531_days6.resx">
+      <DependentUpon>201607040916531_days6.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607041650424_days7.resx">
+      <DependentUpon>201607041650424_days7.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
