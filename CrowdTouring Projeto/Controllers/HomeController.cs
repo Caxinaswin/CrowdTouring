@@ -38,6 +38,11 @@ namespace CrowdTouring_Projeto.Controllers
             return View();
         }
 
+        public ActionResult TermosDeUso()
+        {
+            return View();
+        }
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]

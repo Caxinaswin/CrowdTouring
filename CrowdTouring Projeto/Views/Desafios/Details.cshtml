@@ -4,6 +4,8 @@
     ViewBag.Title = "Details";
 }
 
+<link rel="stylesheet" href="~/Content/star-rating.css">
+
 <div class="row" style="margin-top:60px;">
     <div class="col-md-offset-1 col-md-10" id="detalhesDesafio">
         <div class="row marginDesafio" >
@@ -93,33 +95,65 @@
             else
             {
                 <div class="col-md-offset-4 col-md-4">
-                    <text>Criado por <a href=@Url.Action("VisualizarPerfilUtilizador","Account",new { @id = @Model.nomeUtilizador})>@Model.nomeUtilizador</a> @TimeSinceEvent(@Model.DataCriacao)</text>
+                    <text>Criado por <a href=@Url.Action("VisualizarPerfilUtilizador", "Account", new { @id = @Model.nomeUtilizador })>@Model.nomeUtilizador</a> @TimeSinceEvent(@Model.DataCriacao)</text>
                 </div>
             }
         </div>
     </div>
 </div>
 <div class="row">
-    <div class="col-md-offset-2 col-md-2">
-
-    </div>
-    <div class="col-md-7">
+    <div class="col-md-offset-1 col-md-9">
+        @{bool userExists = false; }
+        @foreach (var i in Model.Solucoes)
+        {
+            if(i.User.Id == User.Identity.GetUserId() || User.Identity.GetUserId() == Model.idUtilizador)
+            {
+                userExists = true;
+            }
+        }
         @foreach(var i in Model.Solucoes)
         {
-            <div class="row" style="background-color:#FFFF99;margin-top:40px;border:2px solid #191919;border-radius:4px">
-                <div class="col-md-2">
-                    <div class="col-md-12" style="text-align:center;padding-top:5px">
-                        <text style="font-weight:900">@i.NumeroVisualizacoes</text>
-                    </div>
-                    <div class="col-md-12" style="padding-top:10px;text-align:center">
-                        <text style="font-size:10px">Visualizacões</text>
-                    </div>
+            <div class="row">
+                @if (HttpContext.Current.User.IsInRole("Avaliador") && Model.TipoAvaliacao == "Avaliacao")
+                {
+                <div class="col-md-3" style="margin-top:40px">
+                    <input name="input-2" value="2.5" class="rating-loading input-2" data-size="xs">
                 </div>
-                <div class="col-md-10" style="border-left:2px solid black">
-                    <p style="text-align:left;padding-top:5px"><a href="" class="VisualizarSolucao" data-url='@Url.Action("Details", "Solucoes", new { id = i.SolucaoId })' style="font-weight:900">@i.SolucaoTitulo</a></p>
-                    <br />
-                    <div class="col-md-offset-4 col-md-8" style="text-align:right">
-                        <text>Criado por <a href="#">@i.User.UserName</a> no dia @i.DataCriacao</text>
+                }
+                else if (Model.TipoAvaliacao == "Votacao")
+                {
+                    if (userExists == true)
+                    {
+                        <div class="col-md-offset-2 col-md-1" style="margin-top:42px">
+                            <button disabled><span class="glyphicon glyphicon-arrow-up"></span></button>
+                            <p style="font-weight:900;margin-left:8px">0</p>
+                            <button disabled><span class="glyphicon glyphicon-arrow-down"></span></button>
+                        </div>
+                    }
+                    else
+                    {
+                    <div class="col-md-offset-2 col-md-1" style="margin-top:42px">
+                        <button><span class="glyphicon glyphicon-arrow-up"></span></button>
+                        <p style="font-weight:900;margin-left:8px">0</p>
+                        <button><span class="glyphicon glyphicon-arrow-down"></span></button>
+                    </div>
+                    }
+                }
+                <div class="col-md-9" style="background-color:#FFFF99;margin-top:40px;border:2px solid #191919;border-radius:4px">
+                    <div class="col-md-2">
+                        <div class="col-md-10" style="text-align:center;padding-top:5px">
+                            <p style="font-weight:900">@i.NumeroVisualizacoes</p>
+                        </div>
+                        <div class="col-md-12" style="padding-top:10px;margin-right:100px">
+                            <p style="font-size:10px">Visualizacões</p>
+                        </div>
+                    </div>
+                    <div class="col-md-10" style="border-left:2px solid black">
+                        <p style="text-align:left;padding-top:5px"><a href="" class="VisualizarSolucao" data-url='@Url.Action("Details", "Solucoes", new { id = i.SolucaoId })' style="font-weight:900">@i.SolucaoTitulo</a></p>
+                        <br />
+                        <div class="col-md-offset-4 col-md-8">
+                            <p style="font-size:10px;text-align:right">Criado por <a href="#">@i.User.UserName</a> @TimeSinceEvent(@i.DataCriacao)</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -168,4 +202,12 @@
 @Scripts.Render("~/bundles/jquery")
 <script src="~/Scripts/googleMapsView.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAsJgW2sXWkrM_kgAK5kF2TC2QMnHdv1G4&callback=initMapView"></script>
+<script src="~/Scripts/star-rating.js"></script>
+<script>
+ $('.input-2').rating({
+        step: 1,
+        starCaptions: { 1: 'Muito mau', 2: 'Mau', 3: 'razoavel', 4: 'Bom', 5: 'Muito Bom' },
+        starCaptionClasses: { 1: 'text-danger', 2: 'text-warning', 3: 'text-info', 4: 'text-primary', 5: 'text-success' },
+ });
+</script>
 

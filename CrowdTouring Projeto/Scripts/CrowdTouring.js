@@ -58,5 +58,4 @@ $(document).ready(function () {
         else 
             $.post("/Account/VisualizarPerfilUtilizador" + utilizadorNome1);
     });
-
 });

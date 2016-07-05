@@ -22,7 +22,7 @@ namespace CrowdTouring_Projeto.Models
         [Authorize]
         public ActionResult Index()
         {       
-            var desafios = db.Desafios.Include(d => d.TipoAvaliacao).Include(d => d.User).Include(d => d.Tags).OrderByDescending(d => d.DataCriacao);
+            var desafios = db.Desafios.Include(d => d.TipoAvaliacao).Include(d => d.User).Include(d => d.Tags).OrderByDescending(d => d.DataCriacao).Where(d => d.TipoAvaliacaoId == 1);
             var count = db.Desafios.Count();
             carregaInformacaoUtilizador();
             carregaRecentes(desafios,count);
