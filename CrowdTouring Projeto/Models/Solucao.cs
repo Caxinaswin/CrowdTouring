@@ -20,7 +20,7 @@ namespace CrowdTouring_Projeto.Models
         public string ApplicationUserId { get; set; }
         public DateTime DataCriacao { get; set; }
         public Desafio Desafio { get; set; }
-        public ICollection<Estrela> Estrelas { get; set; }
-        public ICollection<Voto> Votos { get; set; }
+        public virtual ICollection<Estrela> Estrelas { get; set; }
+        public virtual ICollection<Voto> Votos { get; set; }
     }
 }

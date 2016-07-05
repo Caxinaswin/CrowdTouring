@@ -71,7 +71,7 @@ namespace CrowdTouring_Projeto.Models
         public DbSet<Anexo> Anexos { get; set; }
         public DbSet<Solucao> Solucoes { get; set; }
         public DbSet<Estrela> Estrelas { get; set; }
-        public DbSet<Voto> votos { get; set; }
+        public DbSet<Voto> Votos { get; set; }
         public object UserRoles { get; internal set; }
         public System.Data.Entity.DbSet<CrowdTouring_Projeto.Models.Desafio> Desafios { get; set; }
 

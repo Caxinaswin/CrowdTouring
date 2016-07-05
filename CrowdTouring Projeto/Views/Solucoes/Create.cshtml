@@ -11,14 +11,15 @@
         <h4 style="text-align:left;margin-left:145px">Desafio - @Model.NomeDesafio</h4>
         @Html.HiddenFor(m => m.NomeDesafio)
         <div class="form-group" style="margin-top:40px">
-            @Html.LabelFor(m => m.NomeSolucao, "Solucao", new { @class = "col-md-2 control-label",Id="#caracteres" })
+            @Html.LabelFor(m => m.NomeSolucao, "Solução", new { @class = "col-md-2 control-label"})
             <div class="col-md-10">
-                @Html.TextBoxFor(m => m.NomeSolucao, "Solucao", new { @class = "form-control", maxlength = 50, id = "TituloDesafio", autocomplete = "off" })
+                @Html.TextBoxFor(m => m.NomeSolucao, "Solucao", new { @class = "form-control", maxlength = 50, @id = "TituloSolucao", autocomplete = "off" })
+                <div id="caracteres"></div>
                 @Html.ValidationMessageFor(m => m.NomeSolucao, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group">
-            @Html.LabelFor(m => m.DescricaoSolucao, "Descricao", new { @class = "col-md-2 control-label" })
+            @Html.LabelFor(m => m.DescricaoSolucao, "Descrição", new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
                 @Html.TextAreaFor(m => m.DescricaoSolucao, 10, 25, new { @class = "form-control" })
                 @Html.ValidationMessageFor(m => m.DescricaoSolucao, "", new { @class = "text-danger" })
@@ -30,23 +31,43 @@
             @Html.ValidationMessage("ErroFicheiro2", new { @class = "text-danger" })
             @Html.ValidationMessage("Zip2", new { @class = "text-danger" })
         </div>
+
+        <div class="col-md-offset-2 col-md-10" style="margin-top:20px">
+            <textarea rows="8" cols="80" class="form-control" disabled>Como cliente:após o seu desafio ser resolvido, este compromete-se a efetuar o pagamento ao resolvedor que apresentou a proposta de solução vencedora. A Plataforma não se responsabiliza pelo incumprimento dos pagamentos, desta forma é necessário haver comunicação entre o cliente e o resolvedor de forma a existir consenso das duas partes.
+                                                    Como resolvedor:compromete-se a cumprir os prazos estipulados por cada cliente e declara que todos os tipos de propostas de solução submetidas são de autoria própria, que tem a propriedade intelectual e/ou o poder legal de transmitir ilimitadamente a totalidade dos direitos, de forma exclusiva e perpétua, não havendo lugar a royalties ou pagamentos adicionais, para além do pagamento estabelecido no prémio definido no desafio. Situações de plágio e de apropriação de conteúdos e/ou ideias, projetos de outros autores são expressamente proibidas.
+                                                    Como avaliador:compromete-se a avaliar as propostas de solução de forma justa de modo a facilitar ao cliente eleger a proposta de solução vencedora.
+            </textarea>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <div class="checkbox">
+                    <label>@Html.CheckBox("termos", false) Li e concordo com os termos de uso da criação da solução </label>
+                </div>
+            </div>
+        </div>
+
         <div class="row">
-            <button type="submit" class="btn btn-success" style="margin-top:60px;margin-left:165px">Criar Solução</button>
+            <button id="submeterSolucao" disabled type="submit" class="btn btn-success" style="margin-top:60px;margin-left:165px">Criar Solução</button>
         </div>
         <br/>
     }
     </div>
 
-
+<script src="~/Scripts/jquery-1.10.2.js"></script>
 <script>
 var text_max = 50;
-$('#caracteres').html(text_max + ' characters remaining');
+$('#caracteres').html(text_max + ' characters restantes');
 
-$('#TituloDesafio').keyup(function () {
-var text_length = $('#TituloDesafio').val().length;
+$('#TituloSolucao').keyup(function () {
+var text_length = $('#TituloSolucao').val().length;
 var text_remaining = text_max - text_length;
 
-$('#caracteres').html(text_remaining + 'caracteres restantes ');
+$('#caracteres').html(text_remaining + ' caracteres restantes ');
+});
+
+$("#termos").click(function () {
+    $("#submeterSolucao").attr("disabled", !this.checked);
 });
 </script>
 

@@ -9,7 +9,7 @@ namespace CrowdTouring_Projeto.Models
     public class Voto
     {
         public int VotoId { get; set; }
-        public ApplicationUser user { get; set; }
+        public string userId { get; set; }
         public Solucao solucao { get; set; }
     }
 }

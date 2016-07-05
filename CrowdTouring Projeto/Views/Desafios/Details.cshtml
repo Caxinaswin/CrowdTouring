@@ -72,7 +72,15 @@
                 }
             }
         </div>
-        @if (HttpContext.Current.User.IsInRole("Resolvedor"))
+        @{bool userExists2 = false; }
+        @foreach(var i in Model.Solucoes)
+        {
+            if(User.Identity.GetUserId() == i.User.Id)
+            {
+                userExists2 = true;
+            }
+        }
+        @if (HttpContext.Current.User.IsInRole("Resolvedor") && userExists2 == false)
         {
             <div class="row marginDesafio" style="margin-top:50px">
             @using (Html.BeginForm("Create", "Solucoes", FormMethod.Get, new { @class = "form", enctype = "multipart/form-data" }))
@@ -104,38 +112,52 @@
 <div class="row">
     <div class="col-md-offset-1 col-md-9">
         @{bool userExists = false; }
+        @{bool VotacaoEfetuada = false;}
         @foreach (var i in Model.Solucoes)
         {
             if(i.User.Id == User.Identity.GetUserId() || User.Identity.GetUserId() == Model.idUtilizador)
             {
                 userExists = true;
             }
+        } 
+        @foreach (var i in Model.Solucoes)
+        {
+           foreach (var j in i.Votos)
+           {
+               if (j.userId == User.Identity.GetUserId())
+               {
+                   VotacaoEfetuada = true;
+               }
+           }
         }
+
+        
+        
         @foreach(var i in Model.Solucoes)
         {
             <div class="row">
                 @if (HttpContext.Current.User.IsInRole("Avaliador") && Model.TipoAvaliacao == "Avaliacao")
                 {
                 <div class="col-md-3" style="margin-top:40px">
-                    <input name="input-2" value="2.5" class="rating-loading input-2" data-size="xs">
+                    <input onchange = passaValor(this.value,@i.SolucaoId) name="input-2" value="0" class="rating-loading input-2" data-size="xs">
                 </div>
                 }
                 else if (Model.TipoAvaliacao == "Votacao")
                 {
-                    if (userExists == true)
+                    if (userExists == true || VotacaoEfetuada == true)
                     {
                         <div class="col-md-offset-2 col-md-1" style="margin-top:42px">
-                            <button disabled><span class="glyphicon glyphicon-arrow-up"></span></button>
-                            <p style="font-weight:900;margin-left:8px">0</p>
-                            <button disabled><span class="glyphicon glyphicon-arrow-down"></span></button>
+                            <button disabled class="btn btn-xs"><span class="glyphicon glyphicon-arrow-up"></span></button>
+                            <p style="font-weight:900;margin-left:8px">@i.NumeroVotos</p>
+                            <button disabled class="btn btn-xs"><span class="glyphicon glyphicon-arrow-down"></span></button>
                         </div>
                     }
                     else
                     {
                     <div class="col-md-offset-2 col-md-1" style="margin-top:42px">
-                        <button><span class="glyphicon glyphicon-arrow-up"></span></button>
-                        <p style="font-weight:900;margin-left:8px">0</p>
-                        <button><span class="glyphicon glyphicon-arrow-down"></span></button>
+                        <button class="btn btn-xs" onclick="location.href='@Url.Action("Votacao", "Solucoes",  new { id = @i.SolucaoId, avaliacao = 1})'"><span class="glyphicon glyphicon-arrow-up"></span></button>
+                        <p style="font-weight:900;margin-left:8px">@i.NumeroVotos</p>
+                        <button class="btn btn-xs"><span class="glyphicon glyphicon-arrow-down" onclick="location.href='@Url.Action("Votacao", "Solucoes",  new { id = @i.SolucaoId, avaliacao = -1})'"></span></button>
                     </div>
                     }
                 }
@@ -144,13 +166,23 @@
                         <div class="col-md-10" style="text-align:center;padding-top:5px">
                             <p style="font-weight:900">@i.NumeroVisualizacoes</p>
                         </div>
-                        <div class="col-md-12" style="padding-top:10px;margin-right:100px">
                             <p style="font-size:10px">Visualizacões</p>
                         </div>
-                    </div>
                     <div class="col-md-10" style="border-left:2px solid black">
-                        <p style="text-align:left;padding-top:5px"><a href="" class="VisualizarSolucao" data-url='@Url.Action("Details", "Solucoes", new { id = i.SolucaoId })' style="font-weight:900">@i.SolucaoTitulo</a></p>
-                        <br />
+                        <div class="row">
+                            <div class="col-md-10">
+                                <p style="text-align:left;padding-top:5px"><a href="" class="VisualizarSolucao" data-url='@Url.Action("Details", "Solucoes", new { id = i.SolucaoId })' style="font-weight:900">@i.SolucaoTitulo</a></p>
+                            </div>  
+                            @if (User.Identity.GetUserId() == i.User.Id && Model.TipoAvaliacao == "AceitarSolucoes")
+                            {
+                                <button class="btn btn-warning btn-xs" style="margin-top:5px"><span class="glyphicon glyphicon-edit"></span></button>  
+                                <button class="btn btn-danger btn-xs" style="margin-top:5px"><span class="glyphicon glyphicon-remove"></span></button>                  
+                            }
+                            @if(Model.TipoAvaliacao == "Avaliacao")
+                            {
+                                <p><span class="glyphicon glyphicon-star">@CalculaMediaAvaliacoes(@i.Estrelas)</span></p>
+                            }
+                        </div>
                         <div class="col-md-offset-4 col-md-8">
                             <p style="font-size:10px;text-align:right">Criado por <a href="#">@i.User.UserName</a> @TimeSinceEvent(@i.DataCriacao)</p>
                         </div>
@@ -180,34 +212,61 @@
 }
 
 @functions{
-    public static string TimeSinceEvent(DateTime eventTime)
-    {
-        TimeSpan timeSince = DateTime.Now - eventTime;
-        if (timeSince.Days > 365)
-            return string.Format("há um ano atrás");
-        else if (timeSince.Days > 30)
-            return string.Format("há um mês atrás");
-        else if (timeSince.Days > 0)
-            return string.Format("há {0} dias atrás", timeSince.Days);
-        else if (timeSince.Hours > 0)
-            return string.Format("há {0} horas atrás", timeSince.Hours);
-        else if (timeSince.Minutes > 0)
-            return string.Format("há {0} minutos atrás", timeSince.Minutes);
-        else
-            return string.Format("há {0} segundos atrás", timeSince.Seconds);
+        public static string TimeSinceEvent(DateTime eventTime)
+        {
+            TimeSpan timeSince = DateTime.Now - eventTime;
+            if (timeSince.Days > 365)
+                return string.Format("há um ano atrás");
+            else if (timeSince.Days > 30)
+                return string.Format("há um mês atrás");
+            else if (timeSince.Days > 0)
+                return string.Format("há {0} dias atrás", timeSince.Days);
+            else if (timeSince.Hours > 0)
+                return string.Format("há {0} horas atrás", timeSince.Hours);
+            else if (timeSince.Minutes > 0)
+                return string.Format("há {0} minutos atrás", timeSince.Minutes);
+            else
+                return string.Format("há {0} segundos atrás", timeSince.Seconds);
+        }
+
+        public static decimal CalculaMediaAvaliacoes(ICollection<CrowdTouring_Projeto.Models.Estrela> estrelas)
+        {
+            decimal auxiliar = 0;
+            var count = estrelas.Count();
+            if (count != 0)
+            {
+                foreach (var i in estrelas)
+                {
+                    auxiliar += i.EstrelaValor;
+                } 
+
+                decimal media = auxiliar / count;
+                decimal mediaEstrelas = decimal.Round(media, 1, MidpointRounding.AwayFromZero);
+
+                return mediaEstrelas;
+            }
+            else
+            {
+                return count;
+            }
+        }
     }
-}
 
 
-@Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jquery")
 <script src="~/Scripts/googleMapsView.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAsJgW2sXWkrM_kgAK5kF2TC2QMnHdv1G4&callback=initMapView"></script>
 <script src="~/Scripts/star-rating.js"></script>
 <script>
  $('.input-2').rating({
-        step: 1,
+    step: 1,
         starCaptions: { 1: 'Muito mau', 2: 'Mau', 3: 'razoavel', 4: 'Bom', 5: 'Muito Bom' },
         starCaptionClasses: { 1: 'text-danger', 2: 'text-warning', 3: 'text-info', 4: 'text-primary', 5: 'text-success' },
  });
+
+ function passaValor(valor,idSolucao)
+    {
+        location.href = '@Url.Action("EstrelasAvaliacao", "Solucoes")?estrela=' + valor + '&id=' + idSolucao;
+    }
 </script>
 

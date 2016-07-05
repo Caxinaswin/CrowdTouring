@@ -300,6 +300,26 @@
     <Compile Include="Migrations\201607050931385_fifth.Designer.cs">
       <DependentUpon>201607050931385_fifth.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201607051205460_sixth.cs" />
+    <Compile Include="Migrations\201607051205460_sixth.Designer.cs">
+      <DependentUpon>201607051205460_sixth.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201607051358372_userIdVoto.cs" />
+    <Compile Include="Migrations\201607051358372_userIdVoto.Designer.cs">
+      <DependentUpon>201607051358372_userIdVoto.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201607051440471_userIdVoto2.cs" />
+    <Compile Include="Migrations\201607051440471_userIdVoto2.Designer.cs">
+      <DependentUpon>201607051440471_userIdVoto2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201607051814188_userIdVoto3.cs" />
+    <Compile Include="Migrations\201607051814188_userIdVoto3.Designer.cs">
+      <DependentUpon>201607051814188_userIdVoto3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201607051819588_userIdVoto4.cs" />
+    <Compile Include="Migrations\201607051819588_userIdVoto4.Designer.cs">
+      <DependentUpon>201607051819588_userIdVoto4.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Anexo.cs" />
@@ -479,6 +499,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201607050931385_fifth.resx">
       <DependentUpon>201607050931385_fifth.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607051205460_sixth.resx">
+      <DependentUpon>201607051205460_sixth.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607051358372_userIdVoto.resx">
+      <DependentUpon>201607051358372_userIdVoto.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607051440471_userIdVoto2.resx">
+      <DependentUpon>201607051440471_userIdVoto2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607051814188_userIdVoto3.resx">
+      <DependentUpon>201607051814188_userIdVoto3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607051819588_userIdVoto4.resx">
+      <DependentUpon>201607051819588_userIdVoto4.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

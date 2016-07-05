@@ -72,13 +72,26 @@
        @Html.HiddenFor(m => m.lat)
        @Html.HiddenFor(m => m.lon)
 
+        <div class="form-group" style="margin-top:20px">
+           @Html.Label("Termos de uso", new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                     <textarea rows="8" cols="80" class="form-control" disabled>a) o "Termo" deste Contrato começa na data em que se registar na Plataforma, e continua até que seja denunciado por si ou por nós em conformidade com este Acordo;
+                                                        b) declara que tem pelo menos 18 anos de idade;
+                                                        c) compromete-se a não publicar conteúdos que desrespeitem outros utilizadores ou terceiros utilizando calão, palavras insultuosas, ou qualquer outro tipo situação deste género;
+                                                        d) o registo e utilização da Plataforma implicam que o utilizador registado garanta que toda a informação contida no seu registo é correta.
+                      </textarea>
+                </div>
+        </div>
+
 
         <input type="file" name="file" class="marginTop" />     
         @Html.ValidationMessage("ErroFicheiro", new { @class = "text-danger" })
-        @Html.ValidationMessage("Zip", new { @class = "text-danger" })  
-        <div class="modal-footer">
-            <button type="submit" class="btn btn-lg btn-primary marginTop" id="criarDesafio">Criar Desafio</button>
-        </div>
+        @Html.ValidationMessage("Zip", new { @class = "text-danger" })
+
+        
+                                
+
+        <button type="submit" class="btn btn-lg btn-primary marginTop" id="criarDesafio">Criar Desafio</button>
                         }
     
 

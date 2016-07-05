@@ -24,7 +24,6 @@
             @using (Html.BeginForm("filtrarDesafios", "Desafios", FormMethod.Post))
             {
                 @Html.DropDownList("filtro", null, new { @class = "form-control", onchange = "this.form.submit();", @style = "margin-left:20px" })
-                @Html.Hidden("",new { @class = "textoFiltro" })
             }
         </div>
         }

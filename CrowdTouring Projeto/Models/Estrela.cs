@@ -9,8 +9,9 @@ namespace CrowdTouring_Projeto.Models
     public class Estrela
     {
         public int EstrelaId { get; set; }
+        public int EstrelaValor { get; set; }
         public int SolucaoId { get; set; }
         public Solucao solucao { get; set; }
-        public ApplicationUser User { get; set; }
+        public string User { get; set; }
     }
 }

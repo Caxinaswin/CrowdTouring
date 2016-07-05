@@ -69,6 +69,13 @@
         </div>
     </div>
     <div class="form-group">
+        @Html.Label("Termos de uso", new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            <textarea rows="8" cols="80" class="form-control">Antes de aceder e utilizar o site, leia atentamente os Termos de Uso. Mediante o acesso e utilização desta Plataforma, o utilizador declara ter lido, compreendido e aceite os Termos de Uso abaixo descritos, sem necessidade de qualquer ato ou consentimento posterior. Os Termos de Uso poderão ser alterados em qualquer momento considerando-se que as alterações entram em vigor a partir da data da sua publicação na Plataforma. O acesso e a utilização posteriores da Plataforma pelo utilizador, serão considerados como um sinal inequívoco de que o mesmo leu, aceitou e compreendeu os Termos de Uso alterados.
+            </textarea>
+        </div>
+    </div>
+    <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <div class="checkbox">
                 <label>@Html.CheckBoxFor(m => m.Notificacao) Pretendo receber notificações da plataforma </label>
@@ -79,7 +86,7 @@
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <div class="checkbox">
-                <label>@Html.CheckBox("checky", false) Li e concordo com os termos de utilização da plataforma </label>
+                <label>@Html.CheckBox("checky", false) Li e concordo com os termos de uso da plataforma </label>
             </div>
         </div>
     </div>

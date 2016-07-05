@@ -144,6 +144,26 @@ namespace CrowdTouring_Projeto.Models
             var desafio = db.Desafios.Where(d => d.DesafioId == id).First();
             var anexo = db.Anexos.Where(d => d.DesafioId == id).First();
             var Solucoes = db.Solucoes.Where(d => id == d.DesafioId).ToList();
+            var diasVotacao = desafio.DiasVotacao;
+            var diasAvaliacao = desafio.DiasAvaliacao + desafio.DiasVotacao;
+            DateTime data = new DateTime(2016, 07, 17);
+            DateTime dataFinal = desafio.DataFinalSolucoes.AddDays(diasAvaliacao + 1);
+            /*if (dataFinal <= data)
+            {
+                Solucoes = db.Solucoes.Where(d => id == d.DesafioId).Where(m => m.Desafio.IdSolucaoVencedora != 0).ToList();
+            }
+            else if (desafio.DataFinalSolucoes.AddDays(diasAvaliacao) <= data)
+            {
+                Solucoes = db.Solucoes.Where(d => id == d.DesafioId).OrderByDescending(m => m.Estrelas.).ToList();
+            }
+            else if (desafio.DataFinalSolucoes.AddDays(diasVotacao) <= data)
+            {
+                Solucoes = db.Solucoes.Where(d => id == d.DesafioId).Where(m => m.Desafio.IdSolucaoVencedora != 0).ToList();
+            }
+            else if (desafio.DataFinalSolucoes < data)
+            {
+                Solucoes = db.Solucoes.Where(d => id == d.DesafioId).Where(m => m.Desafio.IdSolucaoVencedora != 0).ToList();
+            }*/
             var user = db.Users.Where(d => d.Desafios.Any(s => s.DesafioId == id)).First();
             var tags = db.Tags
             .Where(c => c.Desafios.Any(s => s.DesafioId == id)).ToList();
@@ -484,19 +504,23 @@ namespace CrowdTouring_Projeto.Models
 
                 if (dataFinal <= data)
                 {
-                    desafio.TipoAvaliacao = TipoAvaliacaoFechado;
+                    //desafio.TipoAvaliacao = TipoAvaliacaoFechado;
+                    desafio.TipoAvaliacao = TipoAvaliacaoEmAvaliacao;
                 }
                 else if (desafio.DataFinalSolucoes.AddDays(diasAvaliacao) <= data)
                 {
+                    // desafio.TipoAvaliacao = TipoAvaliacaoEmAvaliacao;
                     desafio.TipoAvaliacao = TipoAvaliacaoEmAvaliacao;
                 }
                 else if (desafio.DataFinalSolucoes.AddDays(diasVotacao) <= data)
                 {
-                    desafio.TipoAvaliacao = TipoAvaliacaoSolucao;
+                    // desafio.TipoAvaliacao = TipoAvaliacaoSolucao;
+                    desafio.TipoAvaliacao = TipoAvaliacaoEmAvaliacao;
                 }
                 else if (desafio.DataFinalSolucoes < data)
                 {
-                    desafio.TipoAvaliacao = TipoAvaliacaoAberto;
+                    //desafio.TipoAvaliacao = TipoAvaliacaoAberto;
+                    desafio.TipoAvaliacao = TipoAvaliacaoEmAvaliacao;
                 }
             }
 

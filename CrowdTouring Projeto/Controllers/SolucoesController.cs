@@ -30,6 +30,11 @@ namespace CrowdTouring_Projeto.Controllers
             Solucao.FileId = anexo.AnexoId;
             Solucao.FileName = anexo.NomeFicheiro;
             Solucao.FilePath = anexo.Caminho;
+            if(solucao.User.Id != User.Identity.GetUserId())
+            {
+                solucao.NumeroVisualizacoes++;
+                db.SaveChanges();
+            }
 
             return View(Solucao);
         }
@@ -95,6 +100,20 @@ namespace CrowdTouring_Projeto.Controllers
             return View(SolucaoDesafio);
         }
 
+        public ActionResult Votacao(int id, int avaliacao)
+        {
+            var solucao = db.Solucoes.Where(d => d.SolucaoId == id).FirstOrDefault();
+            solucao.NumeroVotos = solucao.NumeroVotos + avaliacao;
+            Voto voto = new Voto();
+            voto.solucao = solucao;
+            voto.userId = User.Identity.GetUserId();
+            db.Votos.Add(voto);
+            db.SaveChanges();
+            solucao.Votos.Add(voto);
+            db.SaveChanges();
+            return RedirectToAction("Details", "Desafios",new { @id = solucao.DesafioId});
+        }
+
         // GET: Solucoes/Edit/5
         public ActionResult Edit(int id)
         {
@@ -121,6 +140,35 @@ namespace CrowdTouring_Projeto.Controllers
         public ActionResult Delete(int id)
         {
             return View();
+        }
+
+        public ActionResult EstrelasAvaliacao(int estrela,int id)
+        {
+            var solucao = db.Solucoes.Where(m => m.SolucaoId == id).FirstOrDefault();
+            var userId = User.Identity.GetUserId();
+            var estrelasDados = db.Estrelas.Where(m => m.User == userId).FirstOrDefault();
+            Estrela Estrela = new Estrela();
+            Estrela.solucao = solucao;
+            Estrela.User = User.Identity.GetUserId();
+            Estrela.EstrelaValor = estrela;
+
+            if (estrelasDados == null)
+            {
+                db.Estrelas.Add(Estrela);
+                db.SaveChanges();
+                solucao.Estrelas.Add(Estrela);
+                db.SaveChanges();
+            }
+            else
+            {
+                estrelasDados.EstrelaValor = estrela;
+                Estrela novaEstrela = solucao.Estrelas.Where(m => m.User == userId).First();
+                novaEstrela.EstrelaValor = estrela;
+                db.SaveChanges();
+               
+            }
+
+            return RedirectToAction("Details", "Desafios", new { @id = solucao.DesafioId });
         }
 
         // POST: Solucoes/Delete/5

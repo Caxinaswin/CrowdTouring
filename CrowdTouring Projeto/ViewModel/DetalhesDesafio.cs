@@ -29,5 +29,6 @@ namespace CrowdTouring_Projeto.ViewModel
         public DateTime dataFinal { get; set; }
         public string TipoAvaliacao { get; set; }
         public DateTime DataFinalAceitacao { get; set; }
+        public ICollection<Models.Solucao> Votos { get; set; }
     }
 }
