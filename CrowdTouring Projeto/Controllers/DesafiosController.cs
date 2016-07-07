@@ -70,12 +70,19 @@ namespace CrowdTouring_Projeto.Models
             var count = db.Desafios.Count();
             carregaInformacaoUtilizador();
             carregaRecentes(desafios, count);
-            var desafios2 = db.Desafios.Include(d => d.TipoAvaliacao).Include(d => d.User).Include(d => d.Tags).OrderByDescending(d => d.DataCriacao).Where(d => d.TipoAvaliacao.TipoAvaliacaoId == 3);
+            var desafios2 = db.Desafios.Include(d => d.TipoAvaliacao).Include(d => d.User).Include(d => d.Tags).OrderByDescending(d => d.DataCriacao).Where(d => d.TipoAvaliacao.TipoAvaliacaoId == 3).ToList();
             carregaFiltros();
             verificaAlteraEstadoDesafio(desafios);
 
 
-            return View("Index", desafios2.ToList());
+            return View("Index", desafios2);
+        }
+
+        public ActionResult OsMeusDesafios()
+        {
+            var user = User.Identity.GetUserId();
+            var OsMeusDesafios = db.Desafios.Where(d => d.User.Id == user);
+            return View(OsMeusDesafios.ToList<Desafio>());
         }
 
         private void carregaInformacaoUtilizador()
@@ -188,6 +195,7 @@ namespace CrowdTouring_Projeto.Models
             detalhes.DataFinalAceitacao = desafio.DataFinalSolucoes;
             detalhes.diasAvaliacao = desafio.DiasAvaliacao;
             detalhes.diasVotacao = desafio.DiasVotacao;
+            detalhes.Pontuacao = desafio.Pontos;
 
 
             System.Diagnostics.Debug.WriteLine(desafioVisualizacoes);
@@ -208,6 +216,7 @@ namespace CrowdTouring_Projeto.Models
             }
             return View(detalhes);
         }
+
 
         private void preencherTagDesafio()
         {
@@ -264,7 +273,7 @@ namespace CrowdTouring_Projeto.Models
             System.Diagnostics.Debug.WriteLine("~/Anexos/" + nomeArquivoV + extensao);
             if (extensao.Equals(".zip"))
                 contentType = "application/zip";
-            return File(nomeArquivo, contentType,"~/Anexos/" + nomeArquivoV + extensao);
+            return File(nomeArquivo, contentType,"~/Anexos/" + Path.GetFileName(nomeArquivo));
         }
 
         // POST: Desafios/Create
@@ -287,8 +296,8 @@ namespace CrowdTouring_Projeto.Models
 
             if(file != null)
             {
-                int indexOf = file.ContentType.IndexOf("zip"); 
-                if (indexOf == -1)
+                string extensao = Path.GetExtension(file.FileName);
+                if (extensao != ".zip")
                 {
                     ModelState.AddModelError("Zip", "Compacte os ficheiros e envie em formato .Zip");
                 }
@@ -307,6 +316,7 @@ namespace CrowdTouring_Projeto.Models
                 desafio.DataCriacao = DateTime.Now;
                 desafio.TipoAvaliacao = TipoAvaliacao;
                 desafio.valor = model.ValorMonetario;
+                desafio.Pontos = model.Pontos;
                 desafio.DataFinalSolucoes = model.DesafioSolucao;
                 desafio.ApplicationUserId = User.Identity.GetUserId();
                 desafio.DiasAvaliacao = obtemDias(model.DesafioSolucao);
@@ -493,34 +503,30 @@ namespace CrowdTouring_Projeto.Models
             TipoAvaliacao TipoAvaliacaoSolucao = db.TiposAvaliacao.Where(i => i.TipoAvaliacaoId == 2).FirstOrDefault();
             TipoAvaliacao TipoAvaliacaoEmAvaliacao = db.TiposAvaliacao.Where(i => i.TipoAvaliacaoId == 3).FirstOrDefault();
             TipoAvaliacao TipoAvaliacaoFechado = db.TiposAvaliacao.Where(i => i.TipoAvaliacaoId == 4).FirstOrDefault();
-            DateTime data = new DateTime(2016,07,17);
+            DateTime data = DateTime.Now;
             foreach (var desafio in desafios)
             {
                 var diasVotacao = desafio.DiasVotacao;
                 var diasAvaliacao = desafio.DiasAvaliacao + desafio.DiasVotacao;
 
-                DateTime dataFinal = desafio.DataFinalSolucoes.AddDays(diasAvaliacao + 1);
+                DateTime dataFinal = desafio.DataFinalSolucoes.AddDays(diasAvaliacao + diasAvaliacao);
 
 
                 if (dataFinal <= data)
                 {
-                    //desafio.TipoAvaliacao = TipoAvaliacaoFechado;
-                    desafio.TipoAvaliacao = TipoAvaliacaoEmAvaliacao;
+                    desafio.TipoAvaliacao = TipoAvaliacaoFechado;
                 }
                 else if (desafio.DataFinalSolucoes.AddDays(diasAvaliacao) <= data)
                 {
-                    // desafio.TipoAvaliacao = TipoAvaliacaoEmAvaliacao;
                     desafio.TipoAvaliacao = TipoAvaliacaoEmAvaliacao;
                 }
                 else if (desafio.DataFinalSolucoes.AddDays(diasVotacao) <= data)
                 {
-                    // desafio.TipoAvaliacao = TipoAvaliacaoSolucao;
-                    desafio.TipoAvaliacao = TipoAvaliacaoEmAvaliacao;
+                    desafio.TipoAvaliacao = TipoAvaliacaoSolucao;
                 }
                 else if (desafio.DataFinalSolucoes < data)
                 {
-                    //desafio.TipoAvaliacao = TipoAvaliacaoAberto;
-                    desafio.TipoAvaliacao = TipoAvaliacaoEmAvaliacao;
+                    desafio.TipoAvaliacao = TipoAvaliacaoAberto;
                 }
             }
 
@@ -528,13 +534,12 @@ namespace CrowdTouring_Projeto.Models
         }
 
 
-        public static int obtemDias(DateTime Solucoes)
+        public static double obtemDias(DateTime Solucoes)
         {
            TimeSpan diferenca = (Solucoes - DateTime.Now);
            var dias = diferenca.TotalDays;
            dias = dias / 2;
-           int diasInteiro = (int)Math.Round(dias);
-           return diasInteiro;
+           return dias;
         }
     }
 }

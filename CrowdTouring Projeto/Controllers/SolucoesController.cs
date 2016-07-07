@@ -53,6 +53,8 @@ namespace CrowdTouring_Projeto.Controllers
         [HttpPost]
         public ActionResult Create(SolucaoDesafio SolucaoDesafio,HttpPostedFileBase file)
         {
+
+            string extensao = Path.GetExtension(file.FileName);
             if (file == null)
             {
                 ModelState.AddModelError("ErroFicheiro2", "Tem que Submeter pelo menos um ficheiro");
@@ -61,7 +63,7 @@ namespace CrowdTouring_Projeto.Controllers
             if (file != null)
             {
                 int indexOf = file.ContentType.IndexOf("zip");
-                if (indexOf == -1)
+                if (extensao != ".zip")
                 {
                     ModelState.AddModelError("Zip2", "Compacte os ficheiros e envie em formato .Zip");
                 }
@@ -117,29 +119,51 @@ namespace CrowdTouring_Projeto.Controllers
         // GET: Solucoes/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            var solucao = db.Solucoes.Where(s => s.SolucaoId == id).First();
+            var anexo = db.Anexos.Where(s => s.SolucaoId == id).FirstOrDefault();
+            SolucaoDesafio solucaoDesafio = new SolucaoDesafio();
+            solucaoDesafio.NomeSolucao = solucao.SolucaoTitulo;
+            solucaoDesafio.DescricaoSolucao = solucao.Descricao;
+            solucaoDesafio.FileName = anexo.NomeFicheiro;
+            solucaoDesafio.IdSolucao = id;
+            solucaoDesafio.IdDesafio = solucao.DesafioId;
+            return View(solucaoDesafio);
         }
 
         // POST: Solucoes/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(SolucaoDesafio solucaoDesafio, HttpPostedFileBase file)
         {
+            var solucao = db.Solucoes.Where(s => s.SolucaoId == solucaoDesafio.IdSolucao).First();
+            var anexo = db.Anexos.Where(s => s.SolucaoId == solucaoDesafio.IdSolucao).First();
             try
             {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
+                solucao.SolucaoTitulo = solucaoDesafio.NomeSolucao;
+                solucao.Descricao = solucaoDesafio.DescricaoSolucao;              
+                if(file.ContentLength > 0)
+                {
+                    anexo.Caminho = solucaoDesafio.FilePath;
+                    anexo.SolucaoId = solucaoDesafio.IdSolucao;
+                    anexo.NomeFicheiro = file.FileName;
+                }
+                db.SaveChanges();
+                return RedirectToAction("Details","Desafios", new { id = solucaoDesafio.IdDesafio });
             }
             catch
             {
-                return View();
+                return RedirectToAction("Details", "Desafios", new { id = solucaoDesafio.IdDesafio });
             }
         }
 
         // GET: Solucoes/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Eliminar(int id,int desafio)
         {
-            return View();
+            Solucao solucao = db.Solucoes.Find(id);
+            var desafioQ = db.Votos.RemoveRange(db.Votos.Where(d => d.solucao.SolucaoId == id));
+            db.SaveChanges();
+            db.Solucoes.Remove(solucao);
+            db.SaveChanges();
+            return RedirectToAction("Details", "Desafios", new { id = solucao.DesafioId });
         }
 
         public ActionResult EstrelasAvaliacao(int estrela,int id)
@@ -169,6 +193,14 @@ namespace CrowdTouring_Projeto.Controllers
             }
 
             return RedirectToAction("Details", "Desafios", new { @id = solucao.DesafioId });
+        }
+
+        public ActionResult Vencedor (int id,int id2)
+        {
+            var desafio = db.Desafios.Where(d => d.DesafioId == id2).First();
+            desafio.IdSolucaoVencedora = id;
+            db.SaveChanges();
+            return RedirectToAction("Index", "desafios");
         }
 
         // POST: Solucoes/Delete/5

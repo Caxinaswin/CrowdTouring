@@ -1,0 +1,26 @@
+﻿@model IEnumerable<CrowdTouring_Projeto.Models.Desafio>
+
+<h2>OsMeusDesafios</h2>
+
+<table class="table">
+<tr>
+    <th>
+        @Html.DisplayNameFor(model => model.TipoTrabalho)
+    </th>
+</tr>    
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <a href ='@Url.Action("Details","Desafios",new { id = item.DesafioId })'>@item.TipoTrabalho</a>
+            </td>
+            <td>
+                @if(item.TipoAvaliacaoId == 4)
+                {
+                    <td>Já pode escolher vencedor!</td>
+                }
+            </td>
+        </tr>
+    }
+</table>

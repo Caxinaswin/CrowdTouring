@@ -3,91 +3,132 @@
     ViewBag.Title = "VisualizarPerfilUtilizador";
 }
 
-<div class="form form-horizontal">
-    <div class="col-md-3" style="margin-top:40px">
-        @if (Model.ImagePath != null)
-        {
-            <img src="~/Images/@Html.DisplayFor(modelItem => modelItem.ImagePath)" width="150" height="150" id="fotografia" />
-        }
-        else
-        {
-            <img src="~/StaticImages/default-user-image.png" width="150" height="150" id="ImagePath" />
-        }
-        <p><a href="#">Reportar Utilizador</a></p>
-    </div>
-    <div class="col-md-9" style="margin-top:40px">
-        <div class="form-group">
-            @Html.LabelFor(m => m.Utilizador, "Nome:", new { @class = "col-md-3 control-label", style = "text-align:right" })
-            <div class="col-md-9">
-                <p class="form-control-static">@Model.Utilizador</p>
+
+    <div class="form form-horizontal">
+        <fieldset>
+            <legend>Informação Básica</legend>
+            <div class="col-md-3" style="margin-top:40px">
+                @if (Model.ImagePath != null)
+                {
+                    <img src="~/Images/@Html.DisplayFor(modelItem => modelItem.ImagePath)" width="150" height="150" id="fotografia" />
+                }
+                else
+                {
+                    <img src="~/StaticImages/default-user-image.png" width="150" height="150" id="ImagePath" />
+                }
+                <p><a href="#">Reportar Utilizador</a></p>
             </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.TipoUtilizador, "Tipo de utilizador:", new { @class = "col-md-3 control-label", style = "text-align:right" })
-            <div class="col-md-9">
-                <p class="form-control-static">@Model.TipoUtilizador</p>
+            <div class="col-md-7" style="margin-top:40px">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Utilizador, "Nome:", new { @class = "col-md-3 control-label", style = "text-align:right" })
+                    <div class="col-md-9">
+                        <p class="form-control-static">@Model.Utilizador</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.TipoUtilizador, "Tipo de utilizador:", new { @class = "col-md-3 control-label", style = "text-align:right" })
+                    <div class="col-md-9">
+                        <p class="form-control-static">@Model.TipoUtilizador</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Pontos, "Pontuação:", new { @class = "col-md-3 control-label", style = "text-align:right" })
+                    <div class="col-md-9">
+                        <p class="form-control-static">@Model.Pontos</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Email, "Email:", new { @class = "col-md-3 control-label", style = "text-align:right" })
+                    <div class="col-md-9">
+                        <p class="form-control-static">@Model.Email</p>
+                    </div>
+                </div>
+                @if (@Model.Telemóvel != null)
+            {
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Telemóvel, "Telemóvel:", new { @class = "col-md-3 control-label", style = "text-align:right" })
+                        <div class="col-md-9">
+                            <p class="form-control-static">@Model.Telemóvel</p>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Telemóvel, "Telemóvel:", new { @class = "col-md-3 control-label", style = "text-align:right" })
+                        <div class="col-md-9">
+                            <p class="form-control-static">Sem informação</p>
+                        </div>
+                    </div>
+                }
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Idade, "Idade:", new { @class = "col-md-3 control-label", style = "text-align:right" })
+                    <div class="col-md-9">
+                        <p class="form-control-static">@Model.Idade</p>
+                    </div>
+                </div>
+                @if (@Model.Empresa != null)
+            {
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Empresa, "Empresa:", new { @class = "col-md-3 control-label", style = "text-align:right" })
+                        <div class="col-md-9">
+                            <p class="form-control-static">@Model.Empresa</p>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Empresa, "Empresa:", new { @class = "col-md-3 control-label", style = "text-align:right" })
+                        <div class="col-md-9">
+                            <p class="form-control-static">Sem informação</p>
+                        </div>
+                    </div>
+                }
+                @if (@Model.Website != null)
+            {
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Website, "Website:", new { @class = "col-md-3 control-label", style = "text-align:right" })
+                        <div class="col-md-9">
+                            <p class="form-control-static">@Model.Website</p>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Website, "Website:", new { @class = "col-md-3 control-label", style = "text-align:right" })
+                        <div class="col-md-9">
+                            <p class="form-control-static">Sem informação</p>
+                        </div>
+                    </div>
+                }
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Pontos, "Pontos:", new { @class = "col-md-3 control-label", style = "text-align:right" })
+                    <div class="col-md-9">
+                        <p class="form-control-static">@Model.Pontos</p>
+                    </div>
+                </div>
+                @if (@Model.Iban != null)
+            {
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Iban, "Iban:", new { @class = "col-md-3 control-label", style = "text-align:right" })
+                        <div class="col-md-9">
+                            <p class="form-control-static">@Model.Iban</p>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Iban, "Iban:", new { @class = "col-md-3 control-label", style = "text-align:right" })
+                        <div class="col-md-9">
+                            <p class="form-control-static">Sem informação</p>
+                        </div>
+                    </div>
+                }
             </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.Pontos, "Pontuação:", new { @class = "col-md-3 control-label", style = "text-align:right" })
-            <div class="col-md-9">
-                <p class="form-control-static">@Model.Pontos</p>
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.Email, "Email:", new { @class = "col-md-3 control-label", style = "text-align:right" })
-            <div class="col-md-9">
-                <p class="form-control-static">@Model.Email</p>
-            </div>
-        </div>
-        @if(@Model.Telemóvel != null)
-        { 
-        <div class="form-group">
-            @Html.LabelFor(m => m.Telemóvel, "Telemóvel:", new { @class = "col-md-3 control-label", style = "text-align:right" })
-            <div class="col-md-9">
-                <p class="form-control-static">@Model.Telemóvel</p>
-            </div>
-        </div>
-        }
-        <div class="form-group">
-            @Html.LabelFor(m => m.Idade, "Idade:", new { @class = "col-md-3 control-label", style = "text-align:right" })
-            <div class="col-md-9">
-                <p class="form-control-static">@Model.Idade</p>
-            </div>
-        </div>
-        @if (@Model.Empresa != null)
-        {
-        <div class="form-group">
-            @Html.LabelFor(m => m.Empresa, "Empresa:", new { @class = "col-md-3 control-label", style = "text-align:right" })
-            <div class="col-md-9">
-                <p class="form-control-static">@Model.Empresa</p>
-            </div>
-        </div>
-        }
-        @if (@Model.Website != null)
-        {
-        <div class="form-group">
-            @Html.LabelFor(m => m.Website, "Website:", new { @class = "col-md-3 control-label", style = "text-align:right" })
-            <div class="col-md-9">
-                <p class="form-control-static">@Model.Website</p>
-            </div>
-        </div>
-        }
-        <div class="form-group">
-            @Html.LabelFor(m => m.Pontos, "Pontos:", new { @class = "col-md-3 control-label", style = "text-align:right" })
-            <div class="col-md-9">
-                <p class="form-control-static">@Model.Pontos</p>
-            </div>
-        </div>
-        @if (@Model.Iban != null)
-        {
-        <div class="form-group">
-            @Html.LabelFor(m => m.Iban, "Iban:", new { @class = "col-md-3 control-label", style = "text-align:right" })
-            <div class="col-md-9">
-                <p class="form-control-static">@Model.Iban</p>
-            </div>
-        </div>
-        }
-    </div>
+        </fieldset>
 </div>
+
 

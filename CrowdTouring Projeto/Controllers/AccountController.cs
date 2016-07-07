@@ -460,6 +460,7 @@ namespace CrowdTouring_Projeto.Controllers
                 PerfilUtilizador.Website = utilizador.website;
                 PerfilUtilizador.Pontos = utilizador.pontos;
                 PerfilUtilizador.Iban = utilizador.Iban;
+                PerfilUtilizador.ImagePath = utilizador.ImagePath;
                 return View(PerfilUtilizador);
             }
             else

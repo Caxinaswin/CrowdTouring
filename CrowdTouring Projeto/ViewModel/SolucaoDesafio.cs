@@ -8,6 +8,7 @@ namespace CrowdTouring_Projeto.ViewModel
 {
     public class SolucaoDesafio
     {
+        public int IdSolucao { get; set; }
         public string NomeDesafio { get; set; }
         public int IdDesafio { get; set; }
         [Required(ErrorMessage = "é necessário inserir um descrição para a proposta de solução")]

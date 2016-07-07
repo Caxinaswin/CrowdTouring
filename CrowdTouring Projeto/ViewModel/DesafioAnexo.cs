@@ -21,6 +21,8 @@ namespace CrowdTouring_Projeto.ViewModel
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime DesafioSolucao { get; set; }
         public ICollection<TagDesafio> TagDesafio { get; set; }
+        public ICollection<TagDesafio> SolucoesDesafio { get; set; }
+        public int Pontos { get; set; }
        
     }
     public class TagDesafio

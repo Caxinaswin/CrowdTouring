@@ -24,8 +24,8 @@ namespace CrowdTouring_Projeto.ViewModel
         public ICollection<Tag> Tags { get; set; }
         public string idUtilizador { get; set; }
         public string nomeUtilizador { get; set; }
-        public int diasAvaliacao { get; set; }
-        public int diasVotacao { get; set; }
+        public double diasAvaliacao { get; set; }
+        public double diasVotacao { get; set; }
         public DateTime dataFinal { get; set; }
         public string TipoAvaliacao { get; set; }
         public DateTime DataFinalAceitacao { get; set; }

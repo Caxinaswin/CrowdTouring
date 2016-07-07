@@ -10,55 +10,56 @@
 
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#" style="padding:0">
-                    <img src="/StaticImages/logo.png" style="width:50px" alt="">
-                </a>
-                @Html.ActionLink("CrowdTouring", "Index", "Home", new { area = "" }, new { @class = "navbar-brand", @style="font-weight:900" })
+    <div id="wrapper">
+        <div class="navbar navbar-inverse navbar-fixed-top" id="header">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#" style="padding:0">
+                        <img src="/StaticImages/logo.png" style="width:50px" alt="">
+                    </a>
+                    @Html.ActionLink("CrowdTouring", "Index", "Home", new { area = "" }, new { @class = "navbar-brand", @style="font-weight:900" })
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                        <li>@Html.ActionLink("Desafios", "Index", "Desafios")</li>
+                        <li>@Html.ActionLink("Como Funciona", "ComoFunciona", "Home")</li>
+                        <li>@Html.ActionLink("Termos de uso", "TermosDeUso", "Home")</li>
+                    </ul>
+                    @Html.Partial("_LoginPartial")
+                </div>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Desafios", "Index", "Desafios")</li>
-                    <li>@Html.ActionLink("Como Funciona", "ComoFunciona", "Home")</li>
-                    <li>@Html.ActionLink("Termos de uso", "TermosDeUso", "Home")</li>
-                </ul>
-                @Html.Partial("_LoginPartial")
+        </div>
+        <div class="container body-content" id="content">
+            @RenderBody()
+        </div>
+        <div id="footer" style="background-color:black">
+            <div class="col-md-offset-2 col-md-3">
+                <p class="footColor">Contactos:</p>
+                <p class="footColor">Email: CrowdTouringSupport@gmail.com</p>
+                <p class="footColor">telemovel: 913231233</p>
+            </div>
+            <div class="col-md-3" style="padding-right:40px">
+                <p class="footColor">Sugestões:</p>
+                <a href='@Url.Action("Sugestao","Home")'>Envia-nos a tua sugestão</a>
+            </div>
+            <div class="col-md-3">
+                <p class="footColor">Visita-nos:</p>
+                <a href="#"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i>acebook</a>
             </div>
         </div>
     </div>
-    <div class="container body-content">
-        @RenderBody()
-    </div>
-    <footer class="footer navbar-fixed-bottom"  id="header">
-        <div class="col-md-offset-2 col-md-3">
-            <p class="footColor">Contactos:</p>
-            <p class="footColor">Email: CrowdTouringSupport@gmail.com</p>
-            <p class="footColor">telemovel: 913231233</p>
-        </div>
-        <div class="col-md-3" style="padding-right:40px">
-            <p class="footColor">Sugestões:</p>
-            <a href='@Url.Action("Sugestao","Home")'>Envia-nos a tua sugestão</a>
-        </div>
-        <div class="col-md-3">
-            <p class="footColor">Visita-nos:</p>
-            <a href="#"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i>acebook</a>
-        </div>
-    </footer>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/UserScripts")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
     <script type="text/javascript" src="~/Scripts/bootstrap-filestyle.js"> </script>
-    <script src="~/Scripts/Avgrund.js"></script>
 
  
 </body>

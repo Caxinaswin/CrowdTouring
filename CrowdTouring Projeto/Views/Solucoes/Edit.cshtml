@@ -1,0 +1,75 @@
+﻿@model CrowdTouring_Projeto.ViewModel.SolucaoDesafio
+
+@{
+    ViewBag.Title = "Editar";
+}
+
+<h2>Editar Solução</h2>
+
+@using (Html.BeginForm("Edit", "Solucoes", FormMethod.Post, new { @class = "form form-horizontal", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Solucao</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.IdSolucao)
+        @Html.HiddenFor(model => model.IdDesafio)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.NomeSolucao, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.NomeSolucao, "Solução", new { htmlAttributes = new { @class = "form-control",maxlength = 50, @id = "TituloSolucao" } })
+                @Html.ValidationMessageFor(model => model.NomeSolucao,"", new { @class = "text-danger" })
+                <div id="caracteres"></div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DescricaoSolucao, "Descrição Solução", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DescricaoSolucao, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DescricaoSolucao,"", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="row" style="margin-top:40px">
+            <div class="col-md-offset-2 col-md-2">
+                <img src="~/StaticImages/ZIP.png" style="width:100px;height:100px" />
+            </div>
+        </div>
+        <div class="row">
+            <div style="margin-left:230px">
+                <p>@Model.FileName</p>
+            </div>
+        </div>
+        <div class="row" style="margin-top:40px">
+             <div class="col-md-offset-2 col-md-2">
+                 <input type="file" name="file" />
+             </div>
+        </div>
+        @Html.HiddenFor(m => m.FileName)
+        <div class="form-group" style="margin-top:20px">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Guardar alterações" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script>
+var text_max = 50;
+$('#caracteres').html(text_max + ' characters restantes');
+
+$('#TituloSolucao').keyup(function () {
+var text_length = $('#TituloSolucao').val().length;
+var text_remaining = text_max - text_length;
+
+$('#caracteres').html(text_remaining + ' caracteres restantes ');
+});
+
+$("#termos").click(function () {
+    $("#submeterSolucao").attr("disabled", !this.checked);
+});
+</script>

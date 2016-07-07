@@ -5,7 +5,7 @@
 
 <div class="col-md-offset-1 col-md-9" style="background-color:#f7c36d;margin-top:40px;border-radius:9px">
 
-    @using (Html.BeginForm("Create", "Solucoes", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal" }))
+    @using (Html.BeginForm("Create", "Solucoes", FormMethod.Post, new { @class = "form form-horizontal", enctype = "multipart/form-data" }))
     {
         @Html.AntiForgeryToken()
         <h4 style="text-align:left;margin-left:145px">Desafio - @Model.NomeDesafio</h4>

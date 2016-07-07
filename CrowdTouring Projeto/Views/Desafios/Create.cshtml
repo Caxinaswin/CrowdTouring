@@ -4,41 +4,51 @@
     ViewBag.Title = "Create";
 }
 
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-
+<link rel="stylesheet" href="~/Content/tipso.min.css">
 @using (Html.BeginForm("Create", "Desafios", FormMethod.Post, new {@class = "form form-horizontal", enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Cria o teu desafio</h4>
-    <div class="form-group" >
-        @Html.LabelFor(m => m.TipoTrabalho, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.TipoTrabalho, new { @class = "form-control", maxlength = 50, id = "TituloDesafio", autocomplete = "off"})
-            <p id="caracteres"></p>
-        </div>
-    </div>
-    <br />
-    <div class="form-group">
-        @Html.LabelFor(m => m.Descricao, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextAreaFor(m => m.Descricao,10,25,new { @class = "form-control" })
-        </div>
-    </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.DesafioSolucao, new { @class = "col-md-2 control-label" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(m => m.DesafioSolucao, new { @class = "form-control", type = "date" })
-                @Html.ValidationMessageFor(m => m.DesafioSolucao,"",new { @class = "text-danger" })
+
+    <h3>Cria o teu desafio</h3>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group" style="margin-top:30px">
+                @Html.LabelFor(m => m.TipoTrabalho, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10" id="pos1">
+                    @Html.TextBoxFor(m => m.TipoTrabalho, new { @class = "form-control", maxlength = 50, id = "TituloDesafio", autocomplete = "off" })
+                    <p id="caracteres"></p>
+                </div>
             </div>
+            <br />
+            <div class="form-group">
+                @Html.LabelFor(m => m.Descricao, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(m => m.Descricao, 10, 25, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.DesafioSolucao,"Data Soluções", new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.DesafioSolucao, new { @class = "form-control", type = "date" })
+                    @Html.ValidationMessageFor(m => m.DesafioSolucao, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />
         </div>
-    <br />
-        <p>Escolhe a tua localização</p>
-        <div id="map"style="width:500px; height:300px"> </div>
-    <div class="form-group marginTop">
-        @Html.LabelFor(m => m.ValorMonetario, new { @class = "col-md-2 control-label" })
+        <div class="col-md-6" style="margin-top:20px">
+        <div id="map" style="width:500px; height:300px"> </div>
+            </div>
+    </div>
+    <div class="form-group"  style="margin-right:550px">
+        @Html.LabelFor(m => m.Pontos,"Pontos", new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.TextBoxFor(m => m.ValorMonetario, new { @class = "form-control",type = "number",min=0,max=500})
+            @Html.TextBoxFor(m => m.Pontos,"1",new { @class = "form-control",type = "number",min=1,max=5})
+        </div>
+    </div>
+    <div class="form-group" style="margin-right:550px">
+        @Html.LabelFor(m => m.ValorMonetario, "Valor Monetário", new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.ValorMonetario, new { @class = "form-control", type = "number", min = 0, max = 500 })
         </div>
     </div>
         <div class="form‐group">
@@ -73,25 +83,27 @@
        @Html.HiddenFor(m => m.lon)
 
         <div class="form-group" style="margin-top:20px">
-           @Html.Label("Termos de uso", new { @class = "col-md-2 control-label" })
+           <label class="col-md-offset-1">Termos de uso</label>
                 <div class="col-md-10">
                      <textarea rows="8" cols="80" class="form-control" disabled>a) o "Termo" deste Contrato começa na data em que se registar na Plataforma, e continua até que seja denunciado por si ou por nós em conformidade com este Acordo;
-                                                        b) declara que tem pelo menos 18 anos de idade;
-                                                        c) compromete-se a não publicar conteúdos que desrespeitem outros utilizadores ou terceiros utilizando calão, palavras insultuosas, ou qualquer outro tipo situação deste género;
-                                                        d) o registo e utilização da Plataforma implicam que o utilizador registado garanta que toda a informação contida no seu registo é correta.
+                                                          b) declara que tem pelo menos 18 anos de idade;
+                                                          c) compromete-se a não publicar conteúdos que desrespeitem outros utilizadores ou terceiros utilizando calão, palavras insultuosas, ou qualquer outro tipo situação deste género;
+                                                          d) o registo e utilização da Plataforma implicam que o utilizador registado garanta que toda a informação contida no seu registo é correta.
                       </textarea>
                 </div>
         </div>
 
 
-        <input type="file" name="file" class="marginTop" />     
+        <input  type="file" name="file" class="marginTop" />     
         @Html.ValidationMessage("ErroFicheiro", new { @class = "text-danger" })
         @Html.ValidationMessage("Zip", new { @class = "text-danger" })
 
         
                                 
 
-        <button type="submit" class="btn btn-lg btn-primary marginTop" id="criarDesafio">Criar Desafio</button>
+        <button type="submit" class="btn btn-success marginTop" id="criarDesafio"><span class="glyphicon glyphicon-ok"></span> Criar Desafio</button>
+        <br />
+        <br />
                         }
     
 
@@ -108,5 +120,37 @@
                     var text_remaining = text_max - text_length;
 
                     $('#caracteres').html(text_remaining + 'caracteres restantes ');
+                });
+            </script>
+            <script src="~/Scripts/tipso.min.js"></script>
+            <script>
+                $('#TituloDesafio').tipso({
+                    content: "O tipo de trabalho deverá especificar o objetivo do desafio",
+                    position: "right",
+                    size: "tiny"
+                });
+
+                $('#DesafioSolucao').tipso({
+                    content: "Deverá indicar até que dia pretende que sejam submetidas propostas de solução num espaço de um mês",
+                    position: "right",
+                    size: "tiny"
+                });
+
+                $('#Descricao').tipso({
+                    content: "Deverá descrever de forma detalhada o que pretende que seja feito, e deverá fazer uma descrição do seu desafio",
+                    position: "right",
+                    size: "tiny"
+                });
+
+                $('#Pontos').tipso({
+                    content: "a pontuação varia entre 1-5 (muito fácil, fácil,normal, difícil e muito difícil respetivamente)",
+                    position: "right",
+                    size: "tiny"
+                });
+
+                $('#ValorMonetario').tipso({
+                    content: "recompensa para o resolvedor que criar a melhor solução",
+                    position: "right",
+                    size: "tiny"
                 });
             </script>

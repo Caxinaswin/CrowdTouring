@@ -5,6 +5,7 @@
 }
 
 <link rel="stylesheet" href="~/Content/star-rating.css">
+<link rel="stylesheet" href="~/Content/avgrund.css" />
 
 <div class="row" style="margin-top:60px;">
     <div class="col-md-offset-1 col-md-10" id="detalhesDesafio">
@@ -16,7 +17,7 @@
             <p class="fontDesafio">@Model.Descricao</p>
         </div>      
         @Html.HiddenFor(m => m.lat, new { id = "lat2" })
-        @Html.HiddenFor(m => m.lon, new { id = "lon2" })      
+        @Html.HiddenFor(m => m.lon, new { id = "lon2" })     
         <div class="row marginDesafio" style="margin-top:60px">
             <p class="fontDesafio">Caminho a percorrer para chegar ao desafio:</p>
             <p><span style="color:green">A</span> - A sua localização atual</p>
@@ -29,10 +30,10 @@
             <figure class="col-md-2">
                 <img src="~/StaticImages/ZIP.png" style="width:100px;height:100px" />
                 <figcaption>@Model.FileName</figcaption>
-            </figure>     
-            <div class="col-md-2">
+            </figure>   
+            <div class="col-md-2"> 
                 <p id="valorDesafio">@Model.ValorMonetario €</p>
-                <p id="pontuacao">1 Ponto(s)</p>
+                <p id="pontuacao">@Model.Pontuacao Ponto(s)</p>
             </div>   
             <div class="col-md-8">
                 @if (@Model.TipoAvaliacao == "AceitarSolucoes")
@@ -48,7 +49,8 @@
                 else if (@Model.TipoAvaliacao == "Avaliacao")
                 {
                     DateTime data = @Model.DataFinalAceitacao;
-                    var dataAvaliacao = data.AddDays(Model.diasVotacao + Model.diasAvaliacao);
+                    var datas = Model.diasVotacao + Model.diasAvaliacao;
+                    var dataAvaliacao = data.AddDays(datas);
                     <p style="font-size:15px"><span style="color:orange">Info:</span>Este desafio encontra-se em fase de @Model.TipoAvaliacao, e termina dia @dataAvaliacao</p>
                 }
                 else if (@Model.TipoAvaliacao == "Fechado")
@@ -130,10 +132,8 @@
                }
            }
         }
-
         
-        
-        @foreach(var i in Model.Solucoes)
+        @foreach (var i in Model.Solucoes)
         {
             <div class="row">
                 @if (HttpContext.Current.User.IsInRole("Avaliador") && Model.TipoAvaliacao == "Avaliacao")
@@ -173,18 +173,20 @@
                             <div class="col-md-10">
                                 <p style="text-align:left;padding-top:5px"><a href="" class="VisualizarSolucao" data-url='@Url.Action("Details", "Solucoes", new { id = i.SolucaoId })' style="font-weight:900">@i.SolucaoTitulo</a></p>
                             </div>  
+                            <button onclick="location.href='@Url.Action("Vencedor", "Solucoes", new {id = i.SolucaoId, id2 = i.SolucaoId })'" class="btn btn-xs btn-success"><span class="glyphicon glyphicon-ok"></span></button>
                             @if (User.Identity.GetUserId() == i.User.Id && Model.TipoAvaliacao == "AceitarSolucoes")
                             {
-                                <button class="btn btn-warning btn-xs" style="margin-top:5px"><span class="glyphicon glyphicon-edit"></span></button>  
-                                <button class="btn btn-danger btn-xs" style="margin-top:5px"><span class="glyphicon glyphicon-remove"></span></button>                  
+                                <button onclick="location.href='@Url.Action("Edit", "Solucoes", new {@id = i.SolucaoId,desafio = Model.DesafioId })'" class="btn btn-warning btn-xs" style="margin-top:5px"><span class="glyphicon glyphicon-edit"></span></button>  
+                                <button onclick="location.href='@Url.Action("Eliminar", "Solucoes", new {@id = i.SolucaoId,desafio = Model.DesafioId })'" id="first" class="btn btn-danger btn-xs" style="margin-top:5px"><span class="glyphicon glyphicon-remove"></span></button>                  
                             }
-                            @if(Model.TipoAvaliacao == "Avaliacao")
+                            @if(Model.TipoAvaliacao == "Avaliacao" || Model.TipoAvaliacao == "Fechado")
                             {
                                 <p><span class="glyphicon glyphicon-star">@CalculaMediaAvaliacoes(@i.Estrelas)</span></p>
                             }
+                            
                         </div>
                         <div class="col-md-offset-4 col-md-8">
-                            <p style="font-size:10px;text-align:right">Criado por <a href="#">@i.User.UserName</a> @TimeSinceEvent(@i.DataCriacao)</p>
+                            <p style="font-size:10px;text-align:right">Criado por <a href="@Url.Action("VisualizarPerfilUtilizador", "Account", new { @id = @i.User.Nome })">@i.User.UserName</a> @TimeSinceEvent(@i.DataCriacao)</p>
                         </div>
                     </div>
                 </div>
@@ -198,17 +200,28 @@
 </div>
 
 
+
 @section scripts{
-    <script>
-    $(".VisualizarSolucao").click(function (event) {
-        var url = $(this).data("url");
-        console.log(url);
-        $("#modal").load(url,  function () {
-            $("#modal").modal();
-        })
-        event.preventDefault();
-    });
+@Scripts.Render("~/bundles/jquery")
+<script src="~/Scripts/jquery.avgrund.js"></script>
+<script src="~/Scripts/Modal.js"></script>
+<script src="~/Scripts/googleMapsView.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAsJgW2sXWkrM_kgAK5kF2TC2QMnHdv1G4&callback=initMapView"></script>
+<script src="~/Scripts/star-rating.js"></script>
+<script>
+
+        $('.input-2').rating({
+            step: 1,
+            starCaptions: { 1: 'Muito mau', 2: 'Mau', 3: 'razoavel', 4: 'Bom', 5: 'Muito Bom' },
+            starCaptionClasses: { 1: 'text-danger', 2: 'text-warning', 3: 'text-info', 4: 'text-primary', 5: 'text-success' },
+        });
+
+ function passaValor(valor,idSolucao)
+    {
+        location.href = '@Url.Action("EstrelasAvaliacao", "Solucoes")?estrela=' + valor + '&id=' + idSolucao;
+    }
 </script>
+<script src="~/Scripts/Modal.js"></script>
 }
 
 @functions{
@@ -252,21 +265,4 @@
         }
     }
 
-
-    @Scripts.Render("~/bundles/jquery")
-<script src="~/Scripts/googleMapsView.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAsJgW2sXWkrM_kgAK5kF2TC2QMnHdv1G4&callback=initMapView"></script>
-<script src="~/Scripts/star-rating.js"></script>
-<script>
- $('.input-2').rating({
-    step: 1,
-        starCaptions: { 1: 'Muito mau', 2: 'Mau', 3: 'razoavel', 4: 'Bom', 5: 'Muito Bom' },
-        starCaptionClasses: { 1: 'text-danger', 2: 'text-warning', 3: 'text-info', 4: 'text-primary', 5: 'text-success' },
- });
-
- function passaValor(valor,idSolucao)
-    {
-        location.href = '@Url.Action("EstrelasAvaliacao", "Solucoes")?estrela=' + valor + '&id=' + idSolucao;
-    }
-</script>
 

@@ -44,6 +44,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Ionic.Zip, Version=1.10.0.0, Culture=neutral, PublicKeyToken=6583c7c814667745, processorArchitecture=MSIL">
       <HintPath>..\packages\DotNetZip.1.10.0\lib\net20\Ionic.Zip.dll</HintPath>
       <Private>True</Private>
@@ -180,12 +188,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
     </Reference>
@@ -240,85 +242,21 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201605291658274_masdas.cs" />
-    <Compile Include="Migrations\201605291658274_masdas.Designer.cs">
-      <DependentUpon>201605291658274_masdas.cs</DependentUpon>
+    <Compile Include="Migrations\201607070915519_first.cs" />
+    <Compile Include="Migrations\201607070915519_first.Designer.cs">
+      <DependentUpon>201607070915519_first.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201605291701598_masdas2.cs" />
-    <Compile Include="Migrations\201605291701598_masdas2.Designer.cs">
-      <DependentUpon>201605291701598_masdas2.cs</DependentUpon>
+    <Compile Include="Migrations\201607071117548_second.cs" />
+    <Compile Include="Migrations\201607071117548_second.Designer.cs">
+      <DependentUpon>201607071117548_second.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201605300929305_two.cs" />
-    <Compile Include="Migrations\201605300929305_two.Designer.cs">
-      <DependentUpon>201605300929305_two.cs</DependentUpon>
+    <Compile Include="Migrations\201607071144305_anotherTag.cs" />
+    <Compile Include="Migrations\201607071144305_anotherTag.Designer.cs">
+      <DependentUpon>201607071144305_anotherTag.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201605311313569_tw00.cs" />
-    <Compile Include="Migrations\201605311313569_tw00.Designer.cs">
-      <DependentUpon>201605311313569_tw00.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201606081315299_sd2.cs" />
-    <Compile Include="Migrations\201606081315299_sd2.Designer.cs">
-      <DependentUpon>201606081315299_sd2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201606081329211_again.cs" />
-    <Compile Include="Migrations\201606081329211_again.Designer.cs">
-      <DependentUpon>201606081329211_again.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201606100957146_again2.cs" />
-    <Compile Include="Migrations\201606100957146_again2.Designer.cs">
-      <DependentUpon>201606100957146_again2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201606101627118_migracao400.cs" />
-    <Compile Include="Migrations\201606101627118_migracao400.Designer.cs">
-      <DependentUpon>201606101627118_migracao400.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201606121950502_new2.cs" />
-    <Compile Include="Migrations\201606121950502_new2.Designer.cs">
-      <DependentUpon>201606121950502_new2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201606131718439_another.cs" />
-    <Compile Include="Migrations\201606131718439_another.Designer.cs">
-      <DependentUpon>201606131718439_another.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201606131745400_another2.cs" />
-    <Compile Include="Migrations\201606131745400_another2.Designer.cs">
-      <DependentUpon>201606131745400_another2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201607040916531_days6.cs" />
-    <Compile Include="Migrations\201607040916531_days6.Designer.cs">
-      <DependentUpon>201607040916531_days6.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201607041650424_days7.cs" />
-    <Compile Include="Migrations\201607041650424_days7.Designer.cs">
-      <DependentUpon>201607041650424_days7.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201607050928209_fourth.cs" />
-    <Compile Include="Migrations\201607050928209_fourth.Designer.cs">
-      <DependentUpon>201607050928209_fourth.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201607050931385_fifth.cs" />
-    <Compile Include="Migrations\201607050931385_fifth.Designer.cs">
-      <DependentUpon>201607050931385_fifth.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201607051205460_sixth.cs" />
-    <Compile Include="Migrations\201607051205460_sixth.Designer.cs">
-      <DependentUpon>201607051205460_sixth.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201607051358372_userIdVoto.cs" />
-    <Compile Include="Migrations\201607051358372_userIdVoto.Designer.cs">
-      <DependentUpon>201607051358372_userIdVoto.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201607051440471_userIdVoto2.cs" />
-    <Compile Include="Migrations\201607051440471_userIdVoto2.Designer.cs">
-      <DependentUpon>201607051440471_userIdVoto2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201607051814188_userIdVoto3.cs" />
-    <Compile Include="Migrations\201607051814188_userIdVoto3.Designer.cs">
-      <DependentUpon>201607051814188_userIdVoto3.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201607051819588_userIdVoto4.cs" />
-    <Compile Include="Migrations\201607051819588_userIdVoto4.Designer.cs">
-      <DependentUpon>201607051819588_userIdVoto4.cs</DependentUpon>
+    <Compile Include="Migrations\201607071200131_anotherTag2.cs" />
+    <Compile Include="Migrations\201607071200131_anotherTag2.Designer.cs">
+      <DependentUpon>201607071200131_anotherTag2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -347,14 +285,19 @@
     <Compile Include="ViewModel\PerfilUtilizador.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Anexos\Atividades.txt" />
+    <Content Include="Content\avgrund.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\PagedList.css" />
+    <Content Include="Content\remodal-default-theme.css" />
+    <Content Include="Content\remodal.css" />
     <Content Include="Content\simple-sidebar.css" />
     <Content Include="Content\star-rating.css" />
     <Content Include="Content\star-rating.min.css" />
+    <Content Include="Content\tipso.min.css" />
     <Content Include="Content\tooltipster.css" />
     <Content Include="Content\vex-theme-os.css" />
     <Content Include="Content\vex.css" />
@@ -367,7 +310,6 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Scripts\Avgrund.js" />
     <Content Include="Scripts\bootstrap-filestyle.js" />
     <Content Include="Scripts\bootstrap-filestyle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -377,12 +319,73 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Anexos\--Anexos-ExemploTP4 %281%29.zip" />
+    <Content Include="Anexos\--Anexos-ExemploTP4 %284%29.zip" />
+    <Content Include="Anexos\--Anexos-ExemploTP4.zip" />
+    <Content Include="Anexos\9140574-António Costa.zip" />
+    <Content Include="Anexos\9140574-Teste.zip" />
+    <Content Include="Anexos\Albergue Económico.zip" />
+    <Content Include="Anexos\Albergue Low Cost.zip" />
+    <Content Include="Anexos\Albuergue económico.zip.zip" />
+    <Content Include="Anexos\arvore3.blend" />
+    <Content Include="Anexos\Casino Hotel.zip" />
+    <Content Include="Anexos\CM Póvoa de Varzim.zip" />
+    <Content Include="Anexos\Criação de site Asp.net mvc.zip" />
+    <Content Include="Anexos\Criação de um Site para o meu Hotel.zip" />
+    <Content Include="Anexos\CrowdTouring %286%29.zip" />
+    <Content Include="Anexos\drag.zip" />
+    <Content Include="Anexos\Empresa %27Martiniou%27.zip" />
+    <Content Include="Anexos\Empresa %27Urban Clean%27.zip" />
+    <Content Include="Anexos\Empresa Martiniou.zip" />
+    <Content Include="Anexos\Entrega_Parcelar I - Relatório.docx" />
+    <Content Include="Anexos\Escorregas %27Fun in Water%27.zip" />
+    <Content Include="Anexos\Escorregas BB.zip" />
+    <Content Include="Anexos\ExemploTP2.zip" />
+    <Content Include="Anexos\ExemploTP3.zip" />
+    <Content Include="Anexos\ExemploTP4.zip" />
+    <Content Include="Anexos\Ficheiros.zip" />
+    <Content Include="Anexos\Hotel precisa de nova atração para recuperar turistas.zip" />
+    <Content Include="Anexos\layout.zip" />
+    <Content Include="Anexos\Limpeza das Praias na Povoa de Varzim.zip" />
+    <Content Include="Anexos\Loja %27Remember Me%27.zip" />
+    <Content Include="Anexos\Loja de Lembranças em Vila do Conde.zip" />
+    <Content Include="Anexos\Loja Lembranças.zip" />
+    <Content Include="Anexos\maca.blend" />
+    <Content Include="Anexos\Melhor local para construção de um Restaurante.zip" />
+    <Content Include="Anexos\Orangeblend.blend1" />
+    <Content Include="Anexos\Os melhores escorregas do mundo.zip" />
+    <Content Include="Anexos\Pacman %283%29.zip" />
+    <Content Include="Anexos\Pacman.zip" />
+    <Content Include="Anexos\Parque aquático Lisboa.zip" />
+    <Content Include="Anexos\Portfolio %27HJ%27.zip" />
+    <Content Include="Anexos\Posto Limpeza de Praias.zip" />
+    <Content Include="Anexos\Project1.mpp" />
+    <Content Include="Anexos\Projeto.zip" />
+    <Content Include="Anexos\Reaproveitar antiga pensão.zip" />
+    <Content Include="Anexos\RecursosTeste.zip" />
+    <Content Include="Anexos\Remodelação Loja.zip" />
+    <Content Include="Anexos\Requisitos e Atividades.pdf" />
+    <Content Include="Anexos\Restaurante %27Beirute%27.zip" />
+    <Content Include="Anexos\Restaurante em Gaia.zip" />
+    <Content Include="Anexos\Resumo LeCroy Corporation.docx" />
+    <Content Include="Anexos\Rock.blend" />
+    <Content Include="Anexos\Site para Hotel.zip" />
+    <Content Include="Anexos\Solucao 1.zip" />
+    <Content Include="Anexos\Solução 4.zip" />
+    <Content Include="Anexos\teste.zip" />
+    <Content Include="Anexos\Teste3 PW1.zip" />
+    <Content Include="Anexos\triangulo.zip" />
+    <Content Include="Anexos\Website em Wix.zip" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\googleMapsView.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.avgrund.js" />
+    <Content Include="Scripts\jquery.avgrund.min.js" />
+    <Content Include="Scripts\jquery.leanModal.min.js" />
+    <Content Include="Scripts\jquery.simplemodal.js" />
     <Content Include="Scripts\jquery.tooltipster.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
@@ -390,11 +393,13 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\Modal.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\remodal.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\selectize.jquery.js" />
     <Content Include="Scripts\selectize.js" />
     <Content Include="Scripts\star-rating.js" />
+    <Content Include="Scripts\tipso.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -444,6 +449,8 @@
     <Content Include="Views\Solucoes\Details.cshtml" />
     <Content Include="Views\Account\VisualizarPerfilUtilizador.cshtml" />
     <Content Include="Views\Home\TermosDeUso.cshtml" />
+    <Content Include="Views\Solucoes\Edit.cshtml" />
+    <Content Include="Views\Desafios\OsMeusDesafios.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -455,65 +462,17 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201605291658274_masdas.resx">
-      <DependentUpon>201605291658274_masdas.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201607070915519_first.resx">
+      <DependentUpon>201607070915519_first.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201605291701598_masdas2.resx">
-      <DependentUpon>201605291701598_masdas2.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201607071117548_second.resx">
+      <DependentUpon>201607071117548_second.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201605300929305_two.resx">
-      <DependentUpon>201605300929305_two.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201607071144305_anotherTag.resx">
+      <DependentUpon>201607071144305_anotherTag.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201605311313569_tw00.resx">
-      <DependentUpon>201605311313569_tw00.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201606081315299_sd2.resx">
-      <DependentUpon>201606081315299_sd2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201606081329211_again.resx">
-      <DependentUpon>201606081329211_again.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201606100957146_again2.resx">
-      <DependentUpon>201606100957146_again2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201606101627118_migracao400.resx">
-      <DependentUpon>201606101627118_migracao400.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201606121950502_new2.resx">
-      <DependentUpon>201606121950502_new2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201606131718439_another.resx">
-      <DependentUpon>201606131718439_another.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201606131745400_another2.resx">
-      <DependentUpon>201606131745400_another2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201607040916531_days6.resx">
-      <DependentUpon>201607040916531_days6.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201607041650424_days7.resx">
-      <DependentUpon>201607041650424_days7.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201607050928209_fourth.resx">
-      <DependentUpon>201607050928209_fourth.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201607050931385_fifth.resx">
-      <DependentUpon>201607050931385_fifth.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201607051205460_sixth.resx">
-      <DependentUpon>201607051205460_sixth.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201607051358372_userIdVoto.resx">
-      <DependentUpon>201607051358372_userIdVoto.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201607051440471_userIdVoto2.resx">
-      <DependentUpon>201607051440471_userIdVoto2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201607051814188_userIdVoto3.resx">
-      <DependentUpon>201607051814188_userIdVoto3.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201607051819588_userIdVoto4.resx">
-      <DependentUpon>201607051819588_userIdVoto4.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201607071200131_anotherTag2.resx">
+      <DependentUpon>201607071200131_anotherTag2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -58,4 +58,11 @@ $(document).ready(function () {
         else 
             $.post("/Account/VisualizarPerfilUtilizador" + utilizadorNome1);
     });
+
+        $("#eliminar").click(function () {
+            $(".abrirModal").avgrund({
+                width: 380, // max is 640px
+                height: 280,
+            });
+        });
 });
